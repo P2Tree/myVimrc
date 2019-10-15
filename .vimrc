@@ -175,25 +175,23 @@
 let mapleader=","
 
 " ------------ 判断操作系统类型 -------------
-if(has('win32') || has('win64')) "is windows
-    let g:isWIN = 1
-    let g:isMAC = 0
-else
-    if system('uname') =~ 'Darwin' "is MAC
-        let g:isWIN = 0
-        let g:isMAC = 1
-    else    " none of above
-        let g:isWIN = 0
-        let g:isMAC = 0
-    endif
-endif
+""if system is windows
+"let g:isWIN = 1
+"let g:isMAC = 0
+
+""if system is mac
+"let g:isWIN = 0
+"let g:isMAC = 1
+
+""if system is others
+let g:isWIN = 0
+let g:isMAC = 0
 
 " ------------ 判断是否处于GUI界面 -------------
-if has('gui_running')
-    let g:isGUI = 1
-else
-    let g:isGUI = 0
-endif
+""if GUI
+"let g:isGUI = 1
+""if not GUI
+let g:isGUI = 0
 
 
 " ------------ 设置着色模式和字体 -------------
@@ -202,17 +200,12 @@ endif
 "       ` export TERM=xterm-256color `
 " 并 source .bashrc即可
 set background=dark
-if g:isWIN
-    colorscheme molokai
-    set guifont=Monaco:h11
-elseif g:isMAC
-    colorscheme molokai
-    set guifont=Monaco:h14
-else " 终端模式
-    colorscheme molokai
-    set guifont=Monaco\ 14
-endif
-
+""if in windows or mac GUI
+"colorscheme molokai
+"set guifont=Monaco:h14
+""if in terminal
+colorscheme molokai
+set guifont=Monaco\ 14
 
 " ------------- 基本配置 --------------
 set autowrite               " 自动保存"
