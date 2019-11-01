@@ -248,10 +248,10 @@ set mat=4                   " 光标闪烁以及闪烁频率
 set scrolloff=7             " 上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
 
 set cursorline              " 高亮光标当前行
-set cursorcolumn            " 高亮光标当前列
+"set cursorcolumn            " 高亮光标当前列
 "配置高亮当前行样式
-hi CursorLine   cterm=underline ctermbg=darkred ctermfg=white
-"hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=white " 配置高亮当前列样式
+hi CursorLine   cterm=underline ctermbg=darkred ctermfg=none
+"hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=none " 配置高亮当前列样式
 set showcmd                 " 命令行显示输入的命令
 set showmode                " 命令行显示vim当前模式中
 
@@ -325,7 +325,7 @@ if g:isGUI
     " set guioptions-=b        " 隐藏底部滚动条
     " set showtabline=0        " 隐藏Tab栏
     set cursorline           " 高亮突出当前行
-    set cursorcolumn       " 高亮突出当前列
+    " set cursorcolumn       " 高亮突出当前列
 endif
 
 " ==================== Custom shortcut key 自定义快捷键 =================== "
@@ -470,37 +470,27 @@ set rtp+=~/.vim/bundle/Vundle.vim
 " Vundle 管理的插件必须位于 vundle#begin() 和 vundle#end() 之间"
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-"  powerline这个插件暂时由airline取代
-"Plugin 'Lokaltog/vim-powerline'             " vim下美观智能的任务栏
 Plugin 'vim-airline/vim-airline'            " vim下美观智能任务栏，取代vim-powerline，同时可取代minibufexpl
 Plugin 'octol/vim-cpp-enhanced-highlight'   " c++ 增强高亮插件
 Plugin 'Yggdroot/indentLine'                " 缩进指示
-" Plugin 'derekwyatt/vim-fswitch'             " 源文件与头文件快速切换
-" Plugin 'lilydjwg/fcitx.vim'                 " 插入模式是中文输入后，返回命令模式自动切换回英文
-" Plugin 'scrooloose/nerdtree'                " 工程目录管理，替代vim中固定的newtrw插件，功能一样
+" Plugin 'derekwyatt/vim-fswitch'           " 源文件与头文件快速切换
+" Plugin 'lilydjwg/fcitx.vim'               " 插入模式是中文输入后，返回命令模式自动切换回英文
+Plugin 'scrooloose/nerdtree'              " 工程目录管理，替代vim中固定的newtrw插件，功能一样
 Plugin 'scrooloose/nerdcommenter'           " 自动开关注释
-" Plugin 'SirVer/ultisnips'                   " 模板补全插件 替代snipmate
-"  minibufexpl.vim这个插件由airline取代，暂不再使用
-"Plugin 'fholgado/minibufexpl.vim'           " 多文件编辑buffer标签
-" Plugin 'dyng/ctrlsf.vim'                    " 工程目录下的内容查找，基于ack，替代grep.vim和ack.vim插件
-"  ack.vim这个插件由ctrlsf取代，不再使用
-"Plugin 'mileszs/ack.vim'                   " 文件内容查找，由ctrlsf替代，暂时屏蔽
-" Plugin 'kshenoy/vim-signature'              " 文件书签辅助，显示书签等功能
-" Plugin 'vim-scripts/taglist.vim'            " 辅助实现tag显示
+" Plugin 'SirVer/ultisnips'                 " 模板补全插件 替代snipmate
+Plugin 'dyng/ctrlsf.vim'                  " 工程目录下的内容查找，基于ack，替代grep.vim和ack.vim插件
+" Plugin 'kshenoy/vim-signature'            " 文件书签辅助，显示书签等功能
+" Plugin 'vim-scripts/taglist.vim'          " 辅助实现tag显示
 Plugin 'jiangmiao/auto-pairs'               " 括号自动补全插件
-"  surround这个插件暂时由auto-pairs取代
-"Plugin 'tpope/vim-surround'                " 括号自动补全插件，由auto-pairs取代，但匹配修改括号等操作还是要surround来完成，暂用不到
-" Plugin 'ctrlpvim/ctrlp.vim'                 " 文件模糊搜索插件，可以用来替换command-Tnnk
-" Plugin 'terryma/vim-multiple-cursors'       " 多光标操作插件
-" Plugin 'Valloric/YouCompleteMe'            " 比较难安装的一个插件
+Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件，可以用来替换command-Tnnk
+" Plugin 'terryma/vim-multiple-cursors'     " 多光标操作插件
+" Plugin 'Valloric/YouCompleteMe'           " 比较难安装的一个插件
 "  syntastic这个插件由于在最新的YouCompleteMe中已经集成，所以不再使用
-"Plugin 'scrooloose/syntastic'               " 语法检查插件，最新的YouCompleteMe也集成了这个插件
-Plugin 'Lokaltog/vim-easymotion'            " 快速移动插件
-Plugin 'vim-scripts/DoxygenToolkit.vim'     " 可以通过快捷键快速添加doxygen注释
+" Plugin 'scrooloose/syntastic'             " 语法检查插件，最新的YouCompleteMe也集成了这个插件
+" Plugin 'Lokaltog/vim-easymotion'          " 快速移动插件
+" Plugin 'vim-scripts/DoxygenToolkit.vim'   " 可以通过快捷键快速添加doxygen注释
 Plugin 'othree/xml.vim'                     " xml file helper
-"  clang-format这个插件由于clang-format未调通，所以没有安装
-" Plugin 'rhysd/vim-clang-format'             " 格式化代码格式，通过clang-format
-" Plugin 'taketwo/vim-ros'                    " used to develop ros
+" Plugin 'taketwo/vim-ros'                  " used to develop ros
 
 call vundle#end()
 filetype on
@@ -514,11 +504,6 @@ filetype on
 " taglist 插件需要系统安装有 ctags，sudo apt-get install ctags，并且在使用前在工程中创建ctags标签文件
 " YCM 插件需要系统的支持，需要系统vim支持python，注意不是python3，需要clang支持，是唯一需要编译才可以运行的插件
 
-
-" Plugin:vim-powerline (https://github.com/Lokaltog/vim-powerline)"
-" 加入powerline状态栏"
-"let g:Powerline_colorscheme='solarized256'
-"
 " Plugin:vim-airline (https://github.com/vim-airline/vim-airline)"
 " 加入airline状态栏
 "let g:airline_powerline_fonts=1 " 字体
@@ -691,14 +676,6 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-" Plugin:newtrw插件"
-" 已经成为vim中的固定插件，文件浏览器，与nerdtree作用一样
-" :Explore 纵向打开文件浏览器"
-" :Sexplore 横向打开文件浏览器"
-" \fe 打开文件浏览器
-"nmap <silent> <Leader>fe :Sexplore!<cr>
-"let g:netrw_winsize = 30                    " 设置文件浏览器宽度
-
 " Plugin:YouCompleteMe插件 (https://github.com/Valloric/YouCompleteMe)"
 " 自动补全，定义跳转，语法检查插件
 " 安装说明：
@@ -823,21 +800,4 @@ let g:DoxygenToolkit_classTag = "\\class   "
 let g:DoxygenToolkit_authorName = "S-PWE, dicksonliuming@gmail.com"
 
 let g:Doxygen_enhanced_color = 1
-
-" " Plugin:vim-clang-format (https://github.com/rhysd/vim-clang-format)
-" " 需要有clang-format的支持，3.4或更新版本，现在该功能已经集成到clang中，故安装clang即可
-" let g:clang_format#style_options = {
-            " \ "AccessModifierOffset" : -4,
-            " \ "AllowShortIfStatementsOnASingleLine" : "true",
-            " \ "AlwaysBreakTemplateDeclarations" : "true",
-            " \ "Standard" : "C++11"}
-" 
-" " map to <Leader>ff in c++ code
-" autocmd FileType c,cpp,objc nnoremap <buffer><Leader>ff :<C-u>ClangFormat<CR>
-" autocmd FileType c,cpp,objc vnoremap <buffer><Leader>ff :ClangFormat<CR>
-" " Toggle auto formatting
-" nmap <Leader>fc :ClangFormatAutoToggle<CR>
-" " Auto-enabling auto-formatting
-" autocmd FileType c,cpp,objc ClangFormatAutoEnable
-" let g:clang_format#command='clang-format-3.7'
 
