@@ -482,8 +482,9 @@ Plugin 'dyng/ctrlsf.vim'                  " 工程目录下的内容查找，基
 " Plugin 'kshenoy/vim-signature'            " 文件书签辅助，显示书签等功能
 " Plugin 'vim-scripts/taglist.vim'          " 辅助实现tag显示
 Plugin 'jiangmiao/auto-pairs'               " 括号自动补全插件
-Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件，可以用来替换command-Tnnk
+Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件
 "Plugin 'junegunn/fzf'                     " 比ctrlp快不少的模糊搜索插件，可以替换ctrlp，但需要系统安装fzf
+"Plugin 'Yggdroot/LeaderF'                  " 另一个能替换ctrlp的插件，和fzf差不多，但依赖少
 " Plugin 'terryma/vim-multiple-cursors'     " 多光标操作插件
 " Plugin 'Valloric/YouCompleteMe'           " 比较难安装的一个插件
 "  syntastic这个插件由于在最新的YouCompleteMe中已经集成，所以不再使用
@@ -681,6 +682,9 @@ nmap <Leader>t :Tags<cr>
 let g:fzf_buffers_jump = 1
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_history_dir = '~/.fzf-history'
+
+“ Plugin:Leaderf插件
+let g:Lf_ReverseOrder = 1
 
 " Plugin:vim-multiple-cursors插件
 " 多光标操作插件
