@@ -3,9 +3,6 @@
 "   ----------------  Author: PWE
 "   ----------------  Email: dicksonliuming@gmail.com
 "
-"   ----------------  Version: 1.0
-"   ----------------  Date: 2016-07-14
-"
 "   -- Brief --
 "   这个配置文件包含了所有我使用的vim所应该有的配置，包括通用配置、插件、
 "   快捷键映射、外部配置文件引用、自定义快捷键等。
@@ -512,6 +509,9 @@ filetype on
 " 加入airline状态栏
 "let g:airline_powerline_fonts=1 " 字体
 let g:airline#extensions#tabline#enabled=1      " 下边两行为打开tagline功能，方便查看buffer和切换
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep='|'
+let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline#extensions#tabline#buffer_nr_show=1
 nnoremap <s-tab> :bn<CR>
 let g:airline#extensions#whitespace#enabled=0   " 下边两行为关闭状态栏空白符号计数显示
@@ -678,6 +678,9 @@ let g:ctrlp_follow_symlinks = 1
 nmap <Leader>f :Files<cr>
 nmap <Leader>b :Buffers<cr>
 nmap <Leader>t :Tags<cr>
+let g:fzf_buffers_jump = 1
+let g:fzf_tags_command = 'ctags -R'
+let g:fzf_history_dir = '~/.fzf-history'
 
 " Plugin:vim-multiple-cursors插件
 " 多光标操作插件
