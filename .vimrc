@@ -59,13 +59,10 @@
 "
 " Ctrl + u                  --将之前输入的一串字符转换为大写，完美解决不按capslock键输入一串大写字符的问题，也完美取代capslock
 " 
-" Shift + Tab                --切换到下一个buffer [airline]
 " ---------- Shift系按键 ----------
 "
 " Shift + >>                 --当前行缩进增加一个单位  [Normal]
 " Shift + <<                 --当前行缩进减少一个单位  [Normal]
-" Shift + j                   --重映射 向下滚屏        [Normal模式]
-" Shift + k                   --重映射 向上滚屏        [Normal模式]
 "
 " ---------- Leader系按键 ----------
 "  你可以输入 :map <Leader> 比如：:map ,
@@ -86,17 +83,17 @@
 "
 " <Leader>/                  --取消搜索后的单词高亮
 "
-" "<Shift-Tab>              --向前轮询切换每一个标签
+" "<Shift-Tab>               --向前轮询切换每一个标签
 "
-" "<Leader>vsp                --将当前所在标签文件复制并左右分割
-" "<Leader>sp               --将当前所在标签文件复制并上下分割
+" "<Leader>vsp               --将当前所在标签文件复制并左右分割
+" "<Leader>sp                --将当前所在标签文件复制并上下分割
 "
 " ---------- 格式化命令 ----------
 "
 " ==                         --缩进当前行
 " =G                         --缩进直到文件结尾
 " gg=G                       --缩进整个文件
-" 行号G=行号G                --缩进指定区间
+" 行号G=行号G                 --缩进指定区间
 
 " u [小写]                   --单步复原               [非插入模式]
 " U [大写]                   --整行复原               [非插入模式]
@@ -255,8 +252,8 @@ hi CursorLine   cterm=underline ctermbg=darkred ctermfg=none
 set showcmd                 " 命令行显示输入的命令
 set showmode                " 命令行显示vim当前模式中
 
-set mouse=a                 " 启动鼠标操作，启用的唯一原因是，给不会vim的同事在本人电脑上看代码用
-" set mouse-=a              " 关闭鼠标操作
+"set mouse=a                " 启动鼠标操作
+set mouse-=a                " 关闭鼠标操作
 
 " ------------- 设置通用缩进策略 --------------
 set expandtab                " 将Tab自动转化成空格 [需要输入真正的Tab键时，使用 Ctrl+V + Tab]
@@ -391,11 +388,17 @@ inoremap <C-u> <esc>gUiwea
 nmap <c-]> g<c-]>
 vmap <c-]> g<c-]>
 
-" Shift + J            向下滚屏 8行
-map <s-j> <esc>8j<cr>
+" J            向下滚屏 8行
+nnoremap J <esc>8j<cr>
 
-" Shift + K            向上滚屏 8行
-map <s-k> <esc>8k<cr>
+" K            向上滚屏 8行
+nnoremap K <esc>8k<cr>
+
+" H            switch to previous buffer
+nnoremap H :bp<cr>
+
+" L            switch to next buffer
+nnoremap L :bn<cr>
 
 " \c                  复制至公共剪贴板
 vmap <leader>c "+y
@@ -483,6 +486,7 @@ Plugin 'dyng/ctrlsf.vim'                  " 工程目录下的内容查找，基
 " Plugin 'vim-scripts/taglist.vim'          " 辅助实现tag显示
 Plugin 'jiangmiao/auto-pairs'               " 括号自动补全插件
 Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件，可以用来替换command-Tnnk
+"Plugin 'junegunn/fzf'                     " 比ctrlp快不少的模糊搜索插件，可以替换ctrlp，但需要系统安装fzf
 " Plugin 'terryma/vim-multiple-cursors'     " 多光标操作插件
 " Plugin 'Valloric/YouCompleteMe'           " 比较难安装的一个插件
 "  syntastic这个插件由于在最新的YouCompleteMe中已经集成，所以不再使用
@@ -666,6 +670,14 @@ let g:ctrlp_max_height = 15
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_mruf_max = 500
 let g:ctrlp_follow_symlinks = 1
+
+" Plugin:fzf插件
+" you need to install fzf tool in your system and add install path to PATH
+" then you need to move fzf.vim (find in fzf source project) to your .vim/plugin folder.
+" be noticed that fzf.vim is not fzf vim plugin, but a help configure that fzf vim plugin needed.
+nmap <Leader>f :Files<cr>
+nmap <Leader>b :Buffers<cr>
+nmap <Leader>t :Tags<cr>
 
 " Plugin:vim-multiple-cursors插件
 " 多光标操作插件
