@@ -481,6 +481,7 @@ Plugin 'scrooloose/nerdcommenter'           " 自动开关注释
 Plugin 'dyng/ctrlsf.vim'                  " 工程目录下的内容查找，基于ack，替代grep.vim和ack.vim插件
 " Plugin 'kshenoy/vim-signature'            " 文件书签辅助，显示书签等功能
 " Plugin 'vim-scripts/taglist.vim'          " 辅助实现tag显示
+Plugin 'majutsushi/tagbar'                  " exchange taglist，better than taglist
 Plugin 'jiangmiao/auto-pairs'               " 括号自动补全插件
 Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件
 "Plugin 'junegunn/fzf'                     " 比ctrlp快不少的模糊搜索插件，可以替换ctrlp，但需要系统安装fzf
@@ -548,7 +549,7 @@ autocmd! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '../src'
 nmap <leader>nt :NERDTree<cr>
 let g:NERDTreeShowHidden = 1                   " 显示隐藏文件
 let NERDTreeWinSize=25                          " 设置子窗口宽度
-let NERDTreeWinPos="right"                      " 设置子窗口位置
+let NERDTreeWinPos="left"                      " 设置子窗口位置
 let NERDTreeMinimalUI=1                         " 子窗口不显示冗余帮助信息
 let NERDTreeAutoDeleteBuffer=1                  " 删除文件时自动删除对应buffer
 
@@ -621,7 +622,7 @@ let g:SignatureMap = {
 
 " Plugin:taglist.vim (https://github.com/vim-script/taglist.vim)"
 " 用于显示tag的辅助插件
-" 需要系统中有ctags支持，准确的说是exuberant ctags支持，现在的ctags默认即为exuberant ctags
+" 需要系统中有ctags支持
 " :TlistOpen 用于打开taglist窗口
 " :TlistClose 用于关闭taglist窗口，直接输入q也可以关闭窗口
 " :TlistToggle 若打开则关闭，若关闭则打开
@@ -654,6 +655,10 @@ let Tlist_Close_On_Select = 1              " 选择了tag后自动关闭taglist�
 let Tlist_File_Fold_Auto_Close = 1          " 当同时显示多个文件中的tag时，可只显示当前文件tag，其他的tag都折叠起来
 let Tlist_Process_File_Always = 1           " 始终解析文件中的tag，而不管taglist是否打开
 "let Tlist_Use_Horiz_Window = 1             " 设置taglist横向显示
+
+" Plugin:tagbar
+nmap <leader>tb :TagbarToggle<cr>
+let g:tagbar_autofocus = 1
 
 " Plugin:ctrlp插件"
 " 文件模糊搜索，可以搜索文件、buffer、mru、tag等
