@@ -229,9 +229,9 @@ set cmdheight=2              " 命令行的高度，默认为1，这里设为2
 set autoread                 " 当文件在外部被修改时自动更新该文件
 set nobackup                 " 不生成备份文件
 set noswapfile               " 不生成交换文件
-set list                     " 显示特殊字符，其中Tab使用高亮~代替，尾部空白使用高亮点号代替
 set wildmenu                 " vim 自身命令行模式智能补全"
-set listchars=tab:\~\ ,trail:.
+set list                       " Show special characters " 显示特殊字符
+set listchars=tab:\~\ ,trail:. " Tab is indicated with '~', trail is indicated with '.' "Tab使用高亮~代替，尾部空白使用高亮点号代替
 set showmatch               " 显示括号配对情况
 set nowrap                  " 禁止代码自动折行
 set history=100             " 设置vim历史记录最大条目数
@@ -253,11 +253,11 @@ set showmode                " 命令行显示vim当前模式中
 set mouse-=a                " 关闭鼠标操作
 
 " ------------- 设置通用缩进策略 --------------
-set expandtab                " 将Tab自动转化成空格 [需要输入真正的Tab键时，使用 Ctrl+V + Tab]
-set tabstop=4                   " 设置编辑时制表符占用空格数"
-set shiftwidth=4                " 设置格式化时制表符占用空格数"
-set softtabstop=4               " 让vim把连续数量的空格视为一个制表符"
-set smarttab                    " 按一次backspace就删除整个tab"
+set expandtab                   " Automatically converts tabs to Spaces " 将Tab自动转化成空格
+set tabstop=4                   " Spaces occupied by tab " 设置编辑时制表符占用空格数
+set shiftwidth=4                " Spaces occupied by tab when formatting " 设置格式化时制表符占用空格数
+set softtabstop=4               " Treat the number of spaces as tab " 把连续数量的空格视为一个制表符
+set smarttab                    " delete a tab with one backspace button " 按一次backspace就删除整个tab
 
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
@@ -525,7 +525,7 @@ endif
 " Plugin:indentLine (https://github.com/Yggdroot/indentLine)"
 " 缩进指示插件
 let g:indentLine_color_term = 239
-let g:indentLine_char = '|'
+let g:indentLine_char = '┆'
 let g:indentLine_enabled = 1
 
 " Plugin:vim-fswitch (https://github.com/derekwyatt/vim-fswitch)"
