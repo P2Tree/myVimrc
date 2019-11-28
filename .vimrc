@@ -20,8 +20,6 @@
 "   还需要在bashrc中配置$VIM, $VIMRUNTIME
 "
 "   -- Contents --
-"   (使用方法：输入`a 以跳转到a书签所在位置，各书签表示章节如下)
-"
 "   0. mark: c 目录
 "   1. mark: a 快捷键说明
 "   2. mark: g 通用设置
@@ -67,7 +65,6 @@
 "
 " <Leader>c                  --复制至公共剪贴板       [仅选择模式]
 " <Leader>a                  --复制所有至公共剪贴板   [Normal模式可用]
-" <Leader>v                  --从公共剪贴板粘贴       [全模式可用]
 "
 " <Leader>rb                 --一键去除所有尾部空白   [全模式可用]
 " <Leader>rm                 --一键去除^M字符         [全模式可用]
@@ -241,11 +238,11 @@ set mat=4                   " 光标闪烁以及闪烁频率
 "set scroll=5                " 指定翻页时的行数，默认不设置则为半页
 set scrolloff=7             " When moving the cursor scroll the screen, at least remain the 'scrolloff' lines above or below "上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
 
-set cursorline              " 高亮光标当前行
-"set cursorcolumn            " 高亮光标当前列
-"配置高亮当前行样式
-hi CursorLine   cterm=underline ctermbg=darkred ctermfg=none
-"hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=none " 配置高亮当前列样式
+set cursorline              " highlight current line "高亮光标当前行
+set cursorcolumn            " highlight current column "高亮光标当前列
+hi CursorLine   cterm=underline ctermbg=darkred ctermfg=none  " config current line color style "配置高亮当前行样式
+hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=none " config current column color style "配置高亮当前列样式
+
 set showcmd                 " 命令行显示输入的命令
 set showmode                " 命令行显示vim当前模式中
 
@@ -259,6 +256,10 @@ set shiftwidth=4                " Spaces occupied by tab when formatting " 设�
 set softtabstop=4               " Treat the number of spaces as tab " 把连续数量的空格视为一个制表符
 set smarttab                    " delete a tab with one backspace button " 按一次backspace就删除整个tab
 
+au FileType c,cpp,html,htmldjango,lua,javascript,nsis
+    \ set expandtab | set tabstop=2 | set shiftwidth=2  " change tab indent strategy for some c style files
+
+au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
 
@@ -396,11 +397,6 @@ vmap <leader>c "+y
 
 " \a                  复制所有至公共剪贴板
 nmap <leader>a <esc>ggVG"+y<esc>
-
-" \v                  从公共剪贴板粘贴
-imap <leader>v <esc>"+p
-nmap <leader>v "+p
-vmap <leader>v "+p
 
 " \rb                 一键去除所有尾部空白
 imap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
