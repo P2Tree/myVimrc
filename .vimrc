@@ -199,55 +199,58 @@ colorscheme molokai
 set guifont=Monaco\ 14
 
 " ------------- 基本配置 --------------
-set autowrite               " 自动保存"
-set backspace=2              " 设置退格键可用
-set whichwrap+=<,>,h,l       " 配合退格键使用
-set autoindent!                      " 设置自动缩进
-set smartindent              " 智能自动缩进
-set cindent                 " c/c++缩进模式
-set relativenumber           " 开启相对行号
-set number!                      " 显示行号
-set ruler                    " 右下角显示光标位置的状态行
-set incsearch                " 开启实时搜索功能，搜索时可以实时匹配
-set hlsearch                 " 开启高亮显示结果
-set ignorecase               " 搜索时大小写不敏感"
-set smartcase                " 如果搜索内容中包含大写字母，则不使用ignorecase
-" set nowrapscan               " 搜索到文件两端时不重新搜索
-set nocompatible             " 关闭vi兼容模式，避免之前版本的一些bug
-set hidden                   " allow change buffer when current buffer is unsave "允许在有未保存的修改时切换缓冲区
-set autochdir                " 设定文件浏览器目录为当前目录
-" set foldmethod=indent        " 选择代码折叠类型，基于缩进进行代码折叠
-set foldmethod=syntax        " 选择代码折叠类型，基于语法进行代码折叠
-set foldlevel=100            " 禁止自动折叠
-" set nofoldenable           " 启动vim时关闭折叠代码
-set foldenable               " 启动vim时打开折叠代码
-set laststatus=2             " 开启状态栏信息，2为总显示最后一个窗口的状态行，1则为窗口数多于一个的时候显示最后一个窗口的状态行，0为不显示最后一个窗口的状态行
-set cmdheight=2              " 命令行的高度，默认为1，这里设为2
-set autoread                 " 当文件在外部被修改时自动更新该文件
-set nobackup                 " 不生成备份文件
-set noswapfile               " 不生成交换文件
-set wildmenu                 " vim 自身命令行模式智能补全"
-set list                       " Show special characters " 显示特殊字符
-set listchars=tab:\~\ ,trail:. " Tab is indicated with '~', trail is indicated with '.' "Tab使用高亮~代替，尾部空白使用高亮点号代替
-set showmatch               " 显示括号配对情况
-set nowrap                  " 禁止代码自动折行
-set history=100             " 设置vim历史记录最大条目数
+set autowrite                   " 自动保存"
+set backspace=eol,start,indent  " 设置退格键可用
+set whichwrap+=<,>,h,l          " 配合退格键使用
+set autoindent!                 " 设置自动缩进
+set smartindent                 " 智能自动缩进
+set cindent                     " c/c++缩进模式
+set relativenumber              " 开启相对行号
+set number!                     " 显示行号
+set ruler                       " 右下角显示光标位置的状态行
+set incsearch                   " 开启实时搜索功能，搜索时可以实时匹配
+set hlsearch                    " 开启高亮显示结果
+set ignorecase                  " 搜索时大小写不敏感"
+set smartcase                   " 如果搜索内容中包含大写字母，则不使用ignorecase
+" set nowrapscan                " 搜索到文件两端时不重新搜索
+set nocompatible                " 关闭vi兼容模式，避免之前版本的一些bug
+set hidden                      " allow change buffer when current buffer is unsave "允许在有未保存的修改时切换缓冲区
+set autochdir                   " 设定文件浏览器目录为当前目录
+" set foldmethod=indent         " 选择代码折叠类型，基于缩进进行代码折叠
+set foldmethod=syntax           " 选择代码折叠类型，基于语法进行代码折叠
+set foldlevel=100               " 禁止自动折叠
+" set nofoldenable              " 启动vim时关闭折叠代码
+set foldenable                  " 启动vim时打开折叠代码
+set laststatus=2                " 开启状态栏信息，2为总显示最后一个窗口的状态行，1则为窗口数多于一个的时候显示最后一个窗口的状态行，0为不显示最后一个窗口的状态行
+set cmdheight=2                 " 命令行的高度，默认为1，这里设为2
+set autoread                    " 当文件在外部被修改时自动更新该文件
+set nobackup                    " 不生成备份文件
+set noswapfile                  " 不生成交换文件
+set wildmenu                    " vim 自身命令行模式智能补全"
+set list                        " Show special characters " 显示特殊字符
+set listchars=tab:\~\ ,trail:.  " Tab is indicated with '~', trail is indicated with '.' "Tab使用高亮~代替，尾部空白使用高亮点号代替
+set showmatch                   " 显示括号配对情况
+set nowrap                      " 禁止代码自动折行
+set history=100                 " 设置vim历史记录最大条目数
 "set magic
-set mat=4                   " 光标闪烁以及闪烁频率
+set mat=4                       " 光标闪烁以及闪烁频率
 
-"set scroll=5                " 指定翻页时的行数，默认不设置则为半页
-set scrolloff=7             " When moving the cursor scroll the screen, at least remain the 'scrolloff' lines above or below "上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
+set lazyredraw                  " Don't update screen during macro and script execution "在宏和脚本运行时不要刷新屏幕（提高使用性能）
 
-set cursorline              " highlight current line "高亮光标当前行
-set cursorcolumn            " highlight current column "高亮光标当前列
+"set scroll=5                   " 指定翻页时的行数，默认不设置则为半页
+set scrolloff=7                 " When moving the cursor scroll the screen, at least remain the 'scrolloff' lines above or below 
+                                "上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
+
+set cursorline                  " highlight current line "高亮光标当前行
+set cursorcolumn                " highlight current column "高亮光标当前列
 hi CursorLine   cterm=underline ctermbg=darkred ctermfg=none  " config current line color style "配置高亮当前行样式
 hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=none " config current column color style "配置高亮当前列样式
 
-set showcmd                 " 命令行显示输入的命令
-set showmode                " 命令行显示vim当前模式中
+set showcmd                     " 命令行显示输入的命令
+set showmode                    " 命令行显示vim当前模式中
 
-"set mouse=a                " 启动鼠标操作
-set mouse-=a                " 关闭鼠标操作
+"set mouse=a                    " 启动鼠标操作
+set mouse-=a                    " 关闭鼠标操作
 
 " ------------- 设置通用缩进策略 --------------
 set expandtab                   " Automatically converts tabs to Spaces " 将Tab自动转化成空格
@@ -269,13 +272,13 @@ set colorcolumn=81              " textwidth border highlight "文本宽度高亮
 
 " ------------- 文件类型检测与语法开关"
 if has("syntax")
-    syntax enable            " 打开语法高亮
-    syntax on                " 允许用指定语法高亮配色方案替换默认方案
+    syntax enable               " 打开语法高亮
+    syntax on                   " 允许用指定语法高亮配色方案替换默认方案
 endif
-filetype on                  " 开启文件类型侦测
-filetype indent on           " 针对不同的文件类型采用不同的缩进格式
-filetype plugin on           " 针对不同的文件类型加载对应的插件
-filetype plugin indent on    " 针对不同的文件类型加载对应的插件缩进
+filetype on                     " 开启文件类型侦测
+filetype indent on              " 针对不同的文件类型采用不同的缩进格式
+filetype plugin on              " 针对不同的文件类型加载对应的插件
+filetype plugin indent on       " 针对不同的文件类型加载对应的插件缩进
 
 " -------------- 根据后缀名指定文件类型 ---------------
 autocmd BufRead,BufNewFile *.h        setlocal ft=c
