@@ -263,6 +263,10 @@ au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
 
+set textwidth=80                " set textwidth, auto return to next line when exceed the number
+                                " 设置文本宽度，当输入大于该数值时，自动换行
+set colorcolumn=81              " textwidth border highlight "文本宽度高亮提示线
+
 " ------------- 文件类型检测与语法开关"
 if has("syntax")
     syntax enable            " 打开语法高亮
