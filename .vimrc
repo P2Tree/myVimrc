@@ -415,18 +415,18 @@ imap <leader>rm <esc>:%s/<c-v><c-m>//g<cr>
 nmap <leader>rm :%s/<c-v><c-m>//g<cr>
 vmap <leader>rm <esc>:%s/<c-v><c-m>//g<cr>
 
-" \rt                 一键替换全部Tab为空格
+" \rt 一键替换全部Tab为空格
 imap <leader>rt <esc>:retab<cr>
 nmap <leader>rt :retab<cr>
 vmap <leader>rt <esc>:retab<cr>
 
-" \ra                 一键清理当前代码文件
+" \ra 一键清理当前代码文件
 nmap <leader>ra <esc><Leader>rt<esc><Leader>rb<esc><Leader>rm<esc>gg=G<esc>
 
-" \ev                 编辑当前所使用的Vim配置文件
-nmap <silent> <Leader>ev <esc>:e $MYVIMRC<cr>
+nmap <leader>ev <esc>:e $MYVIMRC<cr>       " \ev open and edit default vimrc "打开编辑默认vimrc
+nmap <leader>sv <esc>:source $MYVIMRC<cr>  " \sv source default vimrc "生效默认vimrc
 
-"                     真正的删除，而不是剪切
+" 真正的删除，而不是剪切
 nnoremap <leader>x "_x
 nnoremap <leader>X "_X
 nnoremap <leader>d "_d
@@ -435,16 +435,21 @@ nnoremap <leader>D "_D
 vnoremap <leader>d "_d
 vnoremap <leader>dd "_dd
 
-" See [http://vim.wikia.com/wiki/Highlight_unwanted_spaces]
-" - highlight trailing whitespace in red " 高亮行末空格为红色
-" - have this highlighting not appear whilst you are typing in insert mode
-" - have the highlighting of whitespace apply when you open new buffers
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+highlight ExtraWhitespace ctermbg=red guibg=red         " highlight trailing whitespace in red "高亮行末空格为红色
+match ExtraWhitespace /\s\+$/                           " match trailing whitespace "匹配行末空格
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches() " for performance
+autocmd BufWinLeave * call clearmatches()               " for performance
+
+" This function can delete trailing whitespace "这个函数通过替换命令删除行尾空格
+func! DeleteTrailingWS()
+    exec "normal mz"
+    %s/\s\+$//ge
+    exec "normal `z"
+endfunc
+
+au BufWrite * :call DeleteTrailingWS()    " Auto delete trailing whitespace when save file "保存时自动删除行尾空格
 
 " ========================== about make 编译相关 ======================================= "
 " 在程序工程目录下的workspace.vim中，需要编写如下命令，其中的路径要填写为当前程序路径"
