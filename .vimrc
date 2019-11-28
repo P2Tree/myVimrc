@@ -217,7 +217,7 @@ set ignorecase               " 搜索时大小写不敏感"
 set smartcase                " 如果搜索内容中包含大写字母，则不使用ignorecase
 " set nowrapscan               " 搜索到文件两端时不重新搜索
 set nocompatible             " 关闭vi兼容模式，避免之前版本的一些bug
-set hidden                   " 允许在有未保存的修改时切换缓冲区
+set hidden                   " allow change buffer when current buffer is unsave "允许在有未保存的修改时切换缓冲区
 set autochdir                " 设定文件浏览器目录为当前目录
 " set foldmethod=indent        " 选择代码折叠类型，基于缩进进行代码折叠
 set foldmethod=syntax        " 选择代码折叠类型，基于语法进行代码折叠
@@ -239,7 +239,7 @@ set history=100             " 设置vim历史记录最大条目数
 set mat=4                   " 光标闪烁以及闪烁频率
 
 "set scroll=5                " 指定翻页时的行数，默认不设置则为半页
-set scrolloff=7             " 上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
+set scrolloff=7             " When moving the cursor scroll the screen, at least remain the 'scrolloff' lines above or below "上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
 
 set cursorline              " 高亮光标当前行
 "set cursorcolumn            " 高亮光标当前列
@@ -385,17 +385,11 @@ inoremap <C-u> <esc>gUiwea
 nmap <c-]> g<c-]>
 vmap <c-]> g<c-]>
 
-" J            向下滚屏 8行
-nnoremap J <esc>8j<cr>
+nnoremap J <esc>8j<cr>  " Scroll down for the specified lines "向下滚屏 8行
+nnoremap K <esc>8k<cr>  " Scroll up for the specified lines "向上滚屏 8行
 
-" K            向上滚屏 8行
-nnoremap K <esc>8k<cr>
-
-" H            switch to previous buffer
-nnoremap H :bp<cr>
-
-" L            switch to next buffer
-nnoremap L :bn<cr>
+nnoremap H :bp<cr>  " switch to previous buffer "切换到之前一个buffer
+nnoremap L :bn<cr>  " switch to next buffer "切换到之后一个buffer
 
 " \c                  复制至公共剪贴板
 vmap <leader>c "+y
@@ -437,6 +431,17 @@ nnoremap <leader>dd "_dd
 nnoremap <leader>D "_D
 vnoremap <leader>d "_d
 vnoremap <leader>dd "_dd
+
+" See [http://vim.wikia.com/wiki/Highlight_unwanted_spaces]
+" - highlight trailing whitespace in red " 高亮行末空格为红色
+" - have this highlighting not appear whilst you are typing in insert mode
+" - have the highlighting of whitespace apply when you open new buffers
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches() " for performance
 
 " ========================== about make 编译相关 ======================================= "
 " 在程序工程目录下的workspace.vim中，需要编写如下命令，其中的路径要填写为当前程序路径"
