@@ -53,7 +53,7 @@
 " Ctrl + x                  --取消当前多光标选中的字段 [vim-multiple-cursors]
 "
 " Ctrl + u                  --将之前输入的一串字符转换为大写，完美解决不按capslock键输入一串大写字符的问题，也完美取代capslock
-" 
+"
 " ---------- Shift系按键 ----------
 "
 " Shift + >>                 --当前行缩进增加一个单位  [Normal]
@@ -159,7 +159,7 @@
 " q字符 xxx q and @字符      --录制宏   and 执行宏
 
 " ======================= General setup 通用配置 =========================="
-" 
+"
 :se ff=mac                " --更改文件格式，可选 unix、dos、mac
 
 " ------------ 定义快捷键前缀，即<Leader>" --------------
@@ -238,7 +238,7 @@ set mat=4                       " 光标闪烁以及闪烁频率
 set lazyredraw                  " Don't update screen during macro and script execution "在宏和脚本运行时不要刷新屏幕（提高使用性能）
 
 "set scroll=5                   " 指定翻页时的行数，默认不设置则为半页
-set scrolloff=7                 " When moving the cursor scroll the screen, at least remain the 'scrolloff' lines above or below 
+set scrolloff=7                 " When moving the cursor scroll the screen, at least remain the 'scrolloff' lines above or below
                                 "上下移动光标使正文滚页时，光标的上方或下方将至少始终保留的行数，默认给7行 set so=7
 
 set cursorline                  " highlight current line "高亮光标当前行
@@ -701,7 +701,7 @@ let g:fzf_buffers_jump = 1
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_history_dir = '~/.fzf-history'
 
-“ Plugin:Leaderf插件
+" Plugin:Leaderf插件
 let g:Lf_ReverseOrder = 1
 
 " Plugin:vim-multiple-cursors插件
