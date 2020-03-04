@@ -838,3 +838,20 @@ let g:DoxygenToolkit_authorName = "S-PWE, dicksonliuming@gmail.com"
 
 let g:Doxygen_enhanced_color = 1
 
+" Plugin:vim-gitgutter (https://github.com/airblade/vim-gitgutter.git)
+" 可以在代码中显示当前的修改情况，自动标记增加、删除、修改行，以及跳转到下个修改段等功能
+"
+" current hunk is what your cursor pointed to.
+" <Leader>ha : add current hunk into git stage, if you regret to do it, use git
+"              to rollback -- git reset HEAD <file>
+" <Leader>hr : reset current hunk to what it write before
+" <Leader>hv : view current hunk with a small window
+" <Leader>hn : jump to next hunk
+" <Leader>hm : jump to previous hunk
+let g:gitgutter_terminal_reports_focus = 1
+set updatetime=200 " Pay attentain that this is a vim config option
+nmap <Leader>ha <Plug>(GitGutterStageHunk)
+nmap <Leader>hr <Plug>(GitGutterUndoHunk)
+nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
+nmap <Leader>hn <Plug>(GitGutterNextHunk)
+nmap <Leader>hm <Plug>(GitGutterPrevHunk)
