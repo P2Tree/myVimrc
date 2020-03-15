@@ -212,7 +212,7 @@ set incsearch                   " 开启实时搜索功能，搜索时可以实�
 set hlsearch                    " 开启高亮显示结果
 set ignorecase                  " 搜索时大小写不敏感"
 set smartcase                   " 如果搜索内容中包含大写字母，则不使用ignorecase
-" set nowrapscan                " 搜索到文件两端时不重新搜索
+set nowrapscan                " 搜索到文件两端时不重新搜索
 set nocompatible                " 关闭vi兼容模式，避免之前版本的一些bug
 set hidden                      " allow change buffer when current buffer is unsave "允许在有未保存的修改时切换缓冲区
 set autochdir                   " 设定文件浏览器目录为当前目录
@@ -255,13 +255,15 @@ set mouse-=a                    " 关闭鼠标操作
 " ------------- 设置通用缩进策略 --------------
 set expandtab                   " Automatically converts tabs to Spaces " 将Tab自动转化成空格
 set tabstop=4                   " Spaces occupied by tab " 设置编辑时制表符占用空格数
-set shiftwidth=4                " Spaces occupied by tab when formatting " 设置格式化时制表符占用空格数
-set softtabstop=4               " Treat the number of spaces as tab " 把连续数量的空格视为一个制表符
+set shiftwidth=2                " Spaces occupied by tab when formatting " 设置格式化时制表符占用空格数
+set softtabstop=2               " Treat the number of spaces as tab " 把连续数量的空格视为一个制表符
 set smarttab                    " delete a tab with one backspace button " 按一次backspace就删除整个tab
 
 au FileType c,cpp,html,htmldjango,lua,javascript,nsis
     \ set expandtab | set tabstop=2 | set shiftwidth=2  " change tab indent strategy for some c style files
 
+" In Makefiles, don't expand tabs to spaces, since we need the actual tabs, set tabs to 8 spaces
+" 在makefile中，不将tabs扩展成空格，因为我们需要真的tab，并设定tab为8个空格
 au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
@@ -270,7 +272,7 @@ set textwidth=80                " set textwidth, auto return to next line when e
                                 " 设置文本宽度，当输入大于该数值时，自动换行
 set colorcolumn=81              " textwidth border highlight "文本宽度高亮提示线
 
-" ------------- 文件类型检测与语法开关"
+" ------------- 文件类型检测与语法开关 --------------
 if has("syntax")
     syntax enable               " 打开语法高亮
     syntax on                   " 允许用指定语法高亮配色方案替换默认方案
@@ -329,6 +331,28 @@ if g:isGUI
     set cursorline           " 高亮突出当前行
     " set cursorcolumn       " 高亮突出当前列
 endif
+
+" ------------- Use for LLVM -------------------
+augroup filetype
+    au! BufRead,BufNewFile *Makefile*       set filetype=make
+augroup END
+
+" Set a few indentation parameters for LLVM source code style.
+set cinoptions=:0,g0,(0,Ws,l1
+
+" Delete trailing whitespace and tabs at the end of each line
+command! DeleteTrailingWs :%s/\s\+$//
+
+" Enable syntax highlighting for LLVM files. To use, copy
+" utils/vim/llvm.vim to ~/.vim/syntax
+augroup filetype
+    au! BufRead,BufNewFile *.ll     set filetype=llvm
+augroup END
+" Enable syntax highlighting for tablegen files. To use, copy
+" utils/vim/tablegen.vim to ~/.vim/syntax
+augroup filetype
+    au! BufRead,BufNewFile *.td     set filetype=tablegen
+augroup END
 
 " ==================== Custom shortcut key 自定义快捷键 =================== "
 
@@ -507,6 +531,7 @@ Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件
 " Plugin 'vim-scripts/DoxygenToolkit.vim'   " 可以通过快捷键快速添加doxygen注释
 Plugin 'othree/xml.vim'                     " xml file helper
 " Plugin 'taketwo/vim-ros'                  " used to develop ros
+Plugin 'airblade/vim-gitgutter'             " show git diff in the code, jump to changed code hunks
 
 call vundle#end()
 filetype on
