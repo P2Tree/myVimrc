@@ -563,7 +563,7 @@ endif
 " Plugin:indentLine (https://github.com/Yggdroot/indentLine)"
 " 缩进指示插件
 let g:indentLine_color_term = 239
-let g:indentLine_char = '┆'
+let g:indentLine_char = '|'
 let g:indentLine_enabled = 1
 
 " Plugin:vim-fswitch (https://github.com/derekwyatt/vim-fswitch)"
