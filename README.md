@@ -1,4 +1,4 @@
 # USING
-- move `.vim/` to your home directory;
-- move `.vimrc` to your home directory;
-- read `.vimrc` and complete some other operations, such like vim plugin-manager vundle and many other plugins hsould be installed;
+- move `vim/` to your home directory, rename as `.vim/`;
+- move `vimrc` to your home directory, rename as `.vimrc`;
+- read `.vimrc` and complete some other operations, such as plugin manager and plugins should be installed;

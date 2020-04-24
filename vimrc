@@ -7,9 +7,8 @@
 "   这个配置文件包含了所有我使用的vim所应该有的配置，包括通用配置、插件、
 "   快捷键映射、外部配置文件引用、自定义快捷键等。
 "   如果你是第一次使用该vim配置文件，需要在shell中执行如下一行命令：
-"       `git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
-"   然后需要找到“Vundle”部分，注释掉不需要的插件，反注释需要
-"   用的插件，然后运行":PluginInstall"来安装插件。
+"   curl -fLo ~/.vim/autoload/plug.vim --create-dirs " https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   然后需要找到Plugins部分，注释掉不需要的插件，反注释需要用的插件，运行":PlugInstall"来安装插件。
 "   如果VIM是用编译的方法安装，需要在安装后对VIM的环境变量做配置，常规的配置
 "   应该是在/etc/profile中加入：
 "       ```
@@ -25,7 +24,7 @@
 "   2. mark: g 通用设置
 "   3. mark: k 自定义快捷键
 "   4. mark: m 编译相关
-"   5. mark: v Vundle环境配置与插件配置
+"   5. mark: v 插件管理与配置
 
 " ========== Description of Custom shortcut keys 自定义快捷键说明 ==========="
 " ---------- Ctrl系按键 ----------
@@ -504,53 +503,33 @@ au BufWrite * :call DeleteTrailingWS()    " Auto delete trailing whitespace when
 noremap <Leader>mp :cp<cr>
 noremap <Leader>mn :cn<cr>
 
-" ========================== Environment deployment of Vundle and Plugins Vundle ======= "
-" [COMETOVUNDLE]
-" ==== 环境配置以及插件 ===== "
-" 如果你是第一次使用该vim配置文件，需要在shell中执行如下一行命令：
-" `git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
+" ========================== Plugins =============================== "
 "
-" 在命令行模式下输入：
-" PluginInstall         " 安装下边罗列出的所有插件
-" PluginClean           " 清除下边注释或未罗列但在系统中存在的插件
-" PluginUpdate          " 更新下边罗列出的所有插件
-
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-
-" Vundle 管理的插件必须位于 vundle#begin() 和 vundle#end() 之间"
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'            " vim下美观智能任务栏，取代vim-powerline，同时可取代minibufexpl
-Plugin 'octol/vim-cpp-enhanced-highlight'   " c++ 增强高亮插件
-Plugin 'Yggdroot/indentLine'                " 缩进指示
-" Plugin 'derekwyatt/vim-fswitch'           " 源文件与头文件快速切换
-" Plugin 'lilydjwg/fcitx.vim'               " 插入模式是中文输入后，返回命令模式自动切换回英文
-Plugin 'scrooloose/nerdtree'              " 工程目录管理，替代vim中固定的newtrw插件，功能一样
-Plugin 'scrooloose/nerdcommenter'           " 自动开关注释
-" Plugin 'SirVer/ultisnips'                 " 模板补全插件 替代snipmate
-Plugin 'dyng/ctrlsf.vim'                  " 工程目录下的内容查找，基于ack，替代grep.vim和ack.vim插件
-" Plugin 'kshenoy/vim-signature'            " 文件书签辅助，显示书签等功能
-" Plugin 'vim-scripts/taglist.vim'          " 辅助实现tag显示
-Plugin 'majutsushi/tagbar'                  " exchange taglist，better than taglist
-Plugin 'jiangmiao/auto-pairs'               " 括号自动补全插件
-Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件
-"Plugin 'junegunn/fzf'                     " 比ctrlp快不少的模糊搜索插件，可以替换ctrlp，但需要系统安装fzf
-"Plugin 'Yggdroot/LeaderF'                  " 另一个能替换ctrlp的插件，和fzf差不多，但依赖少
-" Plugin 'terryma/vim-multiple-cursors'     " 多光标操作插件
-" Plugin 'Valloric/YouCompleteMe'           " 比较难安装的一个插件
-"  syntastic这个插件由于在最新的YouCompleteMe中已经集成，所以不再使用
-" Plugin 'scrooloose/syntastic'             " 语法检查插件，最新的YouCompleteMe也集成了这个插件
-" Plugin 'Lokaltog/vim-easymotion'          " 快速移动插件
-" Plugin 'vim-scripts/DoxygenToolkit.vim'   " 可以通过快捷键快速添加doxygen注释
-Plugin 'othree/xml.vim'                     " xml file helper
-" Plugin 'taketwo/vim-ros'                  " used to develop ros
-Plugin 'airblade/vim-gitgutter'             " show git diff in the code, jump to changed code hunks
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }     " confirm you have already install fzf
-Plugin 'junegunn/fzf.vim'
-
-call vundle#end()
-filetype on
+" 如果你是第一次使用该vim配置文件，需要在shell中执行如下一行命令：
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"
+" 基本操作（在命令行模式下输入）：
+" :PlugStatus        检查插件状态
+" :PlugInstall       安装已声明但未安装的插件
+" :PlugUpdate        更新已安装的插件
+" :PlugDiff          检查插件安装前后差异
+" :PlugClean         删除已安装但未声明的插件
+" :PlugUpgrade       更新Vim-plug工具
+"
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'            " vim下美观智能任务栏，取代vim-powerline，同时可取代minibufexpl
+Plug 'octol/vim-cpp-enhanced-highlight'   " c++ 增强高亮插件
+Plug 'Yggdroot/indentLine'                " 缩进指示
+Plug 'scrooloose/nerdtree'                " 工程目录管理，替代vim中固定的newtrw插件，功能一样
+Plug 'scrooloose/nerdcommenter'           " 自动开关注释
+Plug 'dyng/ctrlsf.vim'                    " 工程目录下的内容查找，基于ack，替代grep.vim和ack.vim插件
+Plug 'majutsushi/tagbar'                  " exchange taglist，better than taglist
+Plug 'jiangmiao/auto-pairs'               " 括号自动补全插件
+Plug 'othree/xml.vim'                     " xml file helper
+Plug 'airblade/vim-gitgutter'             " show git diff in the code, jump to changed code hunks
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " confirm you have already install fzf
+Plug 'junegunn/fzf.vim'
+call plug#end()
 
 " ---------- 插件配置选项 ----------"
 " 可以通过搜索：Plugin:[plugin name]来全文快速查找插件配置
@@ -588,15 +567,6 @@ let g:airline_symbols.linenr = '⭡'
 let g:indentLine_color_term = 239
 let g:indentLine_char = '|'
 let g:indentLine_enabled = 1
-
-" Plugin:vim-fswitch (https://github.com/derekwyatt/vim-fswitch)"
-" 源文件与头文件快速切换插件
-nmap <silent> <Leader>sw :FSHere<cr>
-" 跳转到同一工程路径下的另一个目录下寻找对应项
-autocmd! BufEnter *.c let b:fswitchdst = 'h' | let b:fswitchlocs = '../inc'
-autocmd! BufEnter *.h let b:fswitchdst = 'c' | let b:fswitchlocs = '../src'
-autocmd! BufEnter *.cpp let b:fswitchdst = 'hpp' | let b:fswitchlocs = '../inc'
-autocmd! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '../src'
 
 " Plugin:nerdtree (https://github.com/scrooloose/nerdtree)"
 " NERDTree            树形文件浏览器
@@ -761,59 +731,6 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-" Plugin:YouCompleteMe插件 (https://github.com/Valloric/YouCompleteMe)"
-" 自动补全，定义跳转，语法检查插件
-" 安装说明：
-"       - 1.通过.vimrc中`PluginInstall`下载插件，需要一定的时间
-"       - 2.开始安装插件: （需要一定时间）
-"           ```
-"               cd ~/.vim/bundle/YouCompleteMe
-"               git submodule update --init --recursive
-"               ./install.py --clang-completer
-"           ```
-"           其中的`--clang-completer`是c-family语言支持，如果需要c#补全，需要另外加`--omnisharp-completer`
-"           如果系统中已经有clang(需要clang版本为3.9.0或以上，否则会出错)，加上`--system-libclang`
-"       - 3.安装完成后，可能找不到c-family支持的东西，需要在`~/.vim/bundle/YouCompleteMe`中链接
-"           `~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/`
-"           ```
-"               cd ~/.vim/bundle/YouCompleteMe
-"               ln -s ./third_party/ycmd/cpp/
-"           ```
-"       - 4.可能需要配置`~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py`，实现一些特性
-"           我在我的repo中增加了我的ycm_extra_conf.py，直接替换即可
-"       -
-"       5.参考的网页：
-"           [1](http://blog.miskcoo.com/2015/12/vim-plugin-youcompleteme)
-"           [2](http://blog.jobbole.com/58978)
-"
-" <leader>yf    跳转到定义或者跳转到声明
-" <leader>yd    打开错误信息界面
-" <Ctrl>o       返回跳转
-" <Ctrl>i       撤销返回跳转，这两条与vim的系统跳转控制是一致的
-nnoremap <Leader>yf :YcmCompleter GoToDefinitionElseDeclaration<cr>
-nmap <Leader>yd :YcmDiags<cr>
-"回车即选中当前项
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-let g:ycm_global_ycm_extra_conf='/home/pwe/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_error_symbol='>>'
-let g:ycm_warning_symbol='>*'
-let g:ycm_seed_identifiers_with_syntax=1    "语法关键字补全
-"let g:ycm_confirm_extra_conf=0             "打开vim不再询问是否加载ycm_extra_conf.py
-let g:ycm_key_invoke_completion= '<C-a>'    " 主动调用补全，对于一些c/c++全局函数，是不会自动补全的，需要主动补全
-"let g:ycm_key_list_select_completion=['<Down>']     "选择列表中选择某个项
-let g:ycm_key_list_previous_completion=['<Up>']     "选择列表中选择前边一个项
-let g:ycm_complete_in_comments=1            "在注释输入中也能补全
-let g:ycm_complete_in_strings=1             "在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_comments_and_strings=0   "注释和字符串中的内容不收录到补全
-set completeopt=longest,menu                "让补全菜单行为与一般ide一致
-
-let g:clang_user_options='-I... || exit 0'
-
-let g:ycm_semantic_triggers={
-\   'roslaunch' : ['="', '$(', '/'],
-\   'rosmsg,rossrv,rosaction' : ['re!^', '/'],
-\}
-
 " Plugin:syntastic插件(https://github.com/scrooloose/syntastic)"
 " Syntastic           语法检查
 " 由YouCompleteMe功能代替
@@ -903,3 +820,8 @@ nmap <Leader>hr <Plug>(GitGutterUndoHunk)
 nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
 nmap <Leader>hn <Plug>(GitGutterNextHunk)
 nmap <Leader>hm <Plug>(GitGutterPrevHunk)
+
+" Plugin:auto-pairs (https://github.com/jiangmiao/auto-pairs.git)
+" 括号自动匹配与删除
+"
+au Filetype vim   unlet g:AutoPairs['"']   " 在vim文件中禁止对双引号(注释符号)的配对操作
