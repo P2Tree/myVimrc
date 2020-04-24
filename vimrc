@@ -265,6 +265,8 @@ au FileType c,cpp,html,htmldjango,lua,javascript,nsis
 " In Makefiles, don't expand tabs to spaces, since we need the actual tabs, set tabs to 8 spaces
 " 在makefile中，不将tabs扩展成空格，因为我们需要真的tab，并设定tab为8个空格
 au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
+" auto wrap in xml file
+au FileType xml set wrap
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
 
@@ -374,14 +376,22 @@ map <c-j> <esc><c-w>j
 
 map <c-d> :bdelete<cr>
 
-" Ctrl + vsp 为将当前窗口左右复制分割
-" Ctrl + sp 为将当前窗口上下复制分割
-map <Leader>vsp <esc><c-w>v
-map <Leader>sp <esc><c-w>s
+" Ctrl + vs 为将当前窗口左右复制分割
+" Ctrl + hs 为将当前窗口上下复制分割
+nnoremap <Leader>vs <esc><c-w>v
+nnoremap <Leader>hs <esc><c-w>s
 " 另外备注：
 " 打开新文件并左右分割：:vsp filename
 " 打开新文件并上下分割：:sp filename
-
+nnoremap :vs :vsp
+nnoremap :hs :sp
+"
+" 调整窗口大小
+nnoremap <silent> + :exe "resize " . (winheight(0) * 4/3)<cr>
+nnoremap <silent> _ :exe "resize " . (winheight(0) * 3/4)<cr>
+nnoremap <silent> = :exe "vertical resize " . (winwidth(0) * 4/3)<cr>
+nnoremap <silent> - :exe "vertical resize " . (winwidth(0) * 3/4)<cr>
+"
 "交换上下行切换的物理切换与逻辑切换"
 nnoremap k gk
 nnoremap gk k
@@ -420,8 +430,12 @@ vmap <c-]> g<c-]>
 nnoremap J <esc>8j<cr>  " Scroll down for the specified lines "向下滚屏 8行
 nnoremap K <esc>8k<cr>  " Scroll up for the specified lines "向上滚屏 8行
 
-nnoremap H :bp<cr>  " switch to previous buffer "切换到之前一个buffer
-nnoremap L :bn<cr>  " switch to next buffer "切换到之后一个buffer
+" nnoremap H :bp<cr>  " switch to previous buffer "切换到之前一个buffer
+" nnoremap L :bn<cr>  " switch to next buffer "切换到之后一个buffer
+" switch to line head "光标跳转到行首
+nnoremap H 0
+" switch to line tail "光标跳转到行尾
+nnoremap L $
 
 " \c                  复制至公共剪贴板
 vmap <leader>c "+y
@@ -532,6 +546,8 @@ Plugin 'ctrlpvim/ctrlp.vim'               " 文件模糊搜索插件
 Plugin 'othree/xml.vim'                     " xml file helper
 " Plugin 'taketwo/vim-ros'                  " used to develop ros
 Plugin 'airblade/vim-gitgutter'             " show git diff in the code, jump to changed code hunks
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }     " confirm you have already install fzf
+Plugin 'junegunn/fzf.vim'
 
 call vundle#end()
 filetype on
@@ -547,18 +563,25 @@ filetype on
 
 " Plugin:vim-airline (https://github.com/vim-airline/vim-airline)"
 " 加入airline状态栏
-"let g:airline_powerline_fonts=1 " 字体
-let g:airline#extensions#tabline#enabled=1      " 下边两行为打开tagline功能，方便查看buffer和切换
-let g:airline#extensions#tabline#left_sep=' '
-let g:airline#extensions#tabline#left_alt_sep='|'
-let g:airline#extensions#tabline#formatter='unique_tail'
-let g:airline#extensions#tabline#buffer_nr_show=1
-nnoremap <s-tab> :bn<CR>
+let g:airline_powerline_fonts = 1 " 字体
+let g:airline#extensions#tabline#enabled = 1  " 允许显示tabline
+let g:airline#extensions#tabline#formatter = 'unique_tail'   " tabline上的标题只显示文件名
+let g:airline#extensions#tabline#buffer_nr_show = 1    " tabline上显示buffer的标号
+nnoremap <tab> :bn<CR>
+nnoremap <s-tab> :bp<CR>
 let g:airline#extensions#whitespace#enabled=0   " 下边两行为关闭状态栏空白符号计数显示
 let g:airline#extensions#whitespace#symbol='!'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
+
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
 
 " Plugin:indentLine (https://github.com/Yggdroot/indentLine)"
 " 缩进指示插件
