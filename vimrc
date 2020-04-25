@@ -221,7 +221,7 @@ set foldlevel=100               " 禁止自动折叠
 " set nofoldenable              " 启动vim时关闭折叠代码
 set foldenable                  " 启动vim时打开折叠代码
 set laststatus=2                " 开启状态栏信息，2为总显示最后一个窗口的状态行，1则为窗口数多于一个的时候显示最后一个窗口的状态行，0为不显示最后一个窗口的状态行
-set cmdheight=2                 " 命令行的高度，默认为1，这里设为2
+set cmdheight=1                 " 命令行的高度，默认为1，这里设为2
 set autoread                    " 当文件在外部被修改时自动更新该文件
 set nobackup                    " 不生成备份文件
 set noswapfile                  " 不生成交换文件
@@ -246,26 +246,17 @@ hi CursorLine   cterm=underline ctermbg=darkred ctermfg=none  " config current l
 hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=none " config current column color style "配置高亮当前列样式
 
 set showcmd                     " 命令行显示输入的命令
-set showmode                    " 命令行显示vim当前模式中
+set noshowmode                    " 命令行显示vim当前模式中
 
-"set mouse=a                    " 启动鼠标操作
-set mouse-=a                    " 关闭鼠标操作
+set mouse=a                    " 启动鼠标操作
 
-" ------------- 设置通用缩进策略 --------------
+" 设置通用缩进策略
 set expandtab                   " Automatically converts tabs to Spaces " 将Tab自动转化成空格
 set tabstop=4                   " Spaces occupied by tab " 设置编辑时制表符占用空格数
 set shiftwidth=2                " Spaces occupied by tab when formatting " 设置格式化时制表符占用空格数
 set softtabstop=2               " Treat the number of spaces as tab " 把连续数量的空格视为一个制表符
 set smarttab                    " delete a tab with one backspace button " 按一次backspace就删除整个tab
 
-au FileType c,cpp,html,htmldjango,lua,javascript,nsis
-    \ set expandtab | set tabstop=2 | set shiftwidth=2  " change tab indent strategy for some c style files
-
-" In Makefiles, don't expand tabs to spaces, since we need the actual tabs, set tabs to 8 spaces
-" 在makefile中，不将tabs扩展成空格，因为我们需要真的tab，并设定tab为8个空格
-au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
-" auto wrap in xml file
-au FileType xml set wrap
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
 
@@ -273,7 +264,7 @@ set textwidth=80                " set textwidth, auto return to next line when e
                                 " 设置文本宽度，当输入大于该数值时，自动换行
 set colorcolumn=81              " textwidth border highlight "文本宽度高亮提示线
 
-" ------------- 文件类型检测与语法开关 --------------
+" 文件类型检测与语法开关
 if has("syntax")
     syntax enable               " 打开语法高亮
     syntax on                   " 允许用指定语法高亮配色方案替换默认方案
@@ -283,21 +274,21 @@ filetype indent on              " 针对不同的文件类型采用不同的缩�
 filetype plugin on              " 针对不同的文件类型加载对应的插件
 filetype plugin indent on       " 针对不同的文件类型加载对应的插件缩进
 
-" -------------- 根据后缀名指定文件类型 ---------------
-autocmd BufRead,BufNewFile *.h        setlocal ft=c
-autocmd BufRead,BufNewFile *.i        setlocal ft=c
-autocmd BufRead,BufNewFile *.m        setlocal ft=objc
-autocmd BufRead,BufNewFile *.ss       setlocal ft=scheme
-autocmd BufRead,BufNewFile *.txt      setlocal ft=txt
-autocmd BufRead,BufNewFile *.log      setlocal ft=conf
-autocmd BufRead,BufNewFile hosts      setlocal ft=conf
-autocmd BufRead,BufNewFile *.conf     setlocal ft=dosini
-autocmd BufRead,BufNewFile *.ini      setlocal ft=dosini
+" 根据后缀名指定文件类型
+autocmd BufRead,BufNewFile *.h            setlocal ft=c
+autocmd BufRead,BufNewFile *.i            setlocal ft=c
+autocmd BufRead,BufNewFile *.m            setlocal ft=objc
+autocmd BufRead,BufNewFile *.ss           setlocal ft=scheme
+autocmd BufRead,BufNewFile *.txt          setlocal ft=txt
+autocmd BufRead,BufNewFile *.log          setlocal ft=conf
+autocmd BufRead,BufNewFile hosts          setlocal ft=conf
+autocmd BufRead,BufNewFile *.conf         setlocal ft=dosini
+autocmd BufRead,BufNewFile *.ini          setlocal ft=dosini
 autocmd BufRead,BufNewFile CMakeLists.txt setlocal ft=cmake
-autocmd BufRead,BufNewFile *.cmake setlocal ft=cmake
-autocmd BufRead,BufNewFile *.launch setlocal ft=xml
+autocmd BufRead,BufNewFile *.cmake        setlocal ft=cmake
+autocmd BufRead,BufNewFile *.launch       setlocal ft=xml
 
-" -------------- 设置文件编码和文件格式 ---------------
+" 设置文件编码和文件格式
 set fenc=utf-8
 set encoding=utf-8                          " 设置内部编码"
 set fileencodings=utf-8,gbk,cp936,latin-1   " 设置支持的文件编码"
@@ -305,39 +296,20 @@ set ambiwidth=double
 set fileformat=unix                         " 设置新文件的EOL格式"
 set fileformats=unix,mac,dos                " 给出文件的EOL格式类型"
 
-if g:isWIN    " 以下的内容是用于避免中文菜单的乱码问题，默认设置为在windows系统中启用
+" 以下的内容是用于避免中文菜单的乱码问题，默认设置为在windows系统中启用
+if g:isWIN
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
     language messages zh_CN.utf-8
 endif
 
-" -------------- 打开vim，自动定位到上次最后变更的位置 ---------------
+" 打开vim，自动定位到上次最后变更的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal!g'\"" | endif
 
-" -------------- 使用GUI界面时的设置 ---------------------------------
-if g:isGUI
-    " 启动时自动最大化窗口
-    if g:isWIN
-        au GUIEnter * simalt ~x
-    endif
-    "winpos 20 20            " 指定窗口出现的位置，坐标原点在屏幕左上角
-    "set lines=20 columns=90 " 指定窗口大小，lines为高度，columns为宽度
-    set guioptions+=c        " 使用字符提示框
-    " set guioptions-=m        " 隐藏菜单栏
-    " set guioptions-=T        " 隐藏工具栏
-    " set guioptions-=L        " 隐藏左侧滚动条
-    " set guioptions-=r        " 隐藏右侧滚动条
-    " set guioptions-=b        " 隐藏底部滚动条
-    " set showtabline=0        " 隐藏Tab栏
-    set cursorline           " 高亮突出当前行
-    " set cursorcolumn       " 高亮突出当前列
-endif
+" initialize tags path
+set tags=./tags;,tags
 
 " ------------- Use for LLVM -------------------
-augroup filetype
-    au! BufRead,BufNewFile *Makefile*       set filetype=make
-augroup END
-
 " Set a few indentation parameters for LLVM source code style.
 set cinoptions=:0,g0,(0,Ws,l1
 
@@ -354,6 +326,21 @@ augroup END
 augroup filetype
     au! BufRead,BufNewFile *.td     set filetype=tablegen
 augroup END
+augroup filetype
+    au! BufRead,BufNewFile *Makefile*       set filetype=make
+augroup END
+
+" change tab indent strategy for some c style files
+au FileType c,cpp,html,htmldjango,lua,javascript,nsis
+    \ set expandtab | set tabstop=2 | set shiftwidth=2
+
+" In Makefiles, don't expand tabs to spaces, since we need the actual tabs, set tabs to 8 spaces
+" 在makefile中，不将tabs扩展成空格，因为我们需要真的tab，并设定tab为8个空格
+au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
+" auto wrap in xml file
+au FileType xml set wrap
+
+" ------------- END of Use for LLVM -------------------
 
 " ==================== Custom shortcut key 自定义快捷键 =================== "
 
@@ -372,8 +359,6 @@ map <c-h> <esc><c-w>h
 map <c-l> <esc><c-w>l
 map <c-k> <esc><c-w>k
 map <c-j> <esc><c-w>j
-
-map <c-d> :bdelete<cr>
 
 " Ctrl + vs 为将当前窗口左右复制分割
 " Ctrl + hs 为将当前窗口上下复制分割
@@ -419,49 +404,30 @@ cmap w!! w !sudo tee >/dev/null %
 "改变撤销后反撤销的键位"
 nnoremap U <C-r>
 
-" 将之前输入的一串字符转换为大写，完美替换[CapsLock]
-inoremap <C-u> <esc>gUiwea
-
 " Ctrl + ]            多选择跳转
-nmap <c-]> g<c-]>
-vmap <c-]> g<c-]>
+" 说明一下，因为有些时候会对应多个tags，而第一个tag不一定是我们想跳转的位置，
+" 所以不如就每次跳转时，如果有多个tags，就输出列表让我自己选择
+nnoremap <c-]> g<c-]>
 
 nnoremap J <esc>8j<cr>  " Scroll down for the specified lines "向下滚屏 8行
 nnoremap K <esc>8k<cr>  " Scroll up for the specified lines "向上滚屏 8行
 
-" nnoremap H :bp<cr>  " switch to previous buffer "切换到之前一个buffer
-" nnoremap L :bn<cr>  " switch to next buffer "切换到之后一个buffer
 " switch to line head "光标跳转到行首
 nnoremap H 0
 " switch to line tail "光标跳转到行尾
+" 说明：本人每次输入$时盲选都会点到#或%，准确度不高，H和L这两个太方便了
 nnoremap L $
 
-" \c                  复制至公共剪贴板
-vmap <leader>c "+y
+" \rm remove windows ^M "去除windows字符^M
+nnoremap <leader>rm :%s/<c-v><c-m>//g<cr>
 
-" \a                  复制所有至公共剪贴板
-nmap <leader>a <esc>ggVG"+y<esc>
+" \rt exchange tab with space "替换全部Tab为空格
+nnoremap <leader>rt :retab<cr>
 
-" \rb                 一键去除所有尾部空白
-imap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
-nmap <leader>rb :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
-vmap <leader>rb <esc>:let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<cr>
-
-" \rm                 一键去除windows字符^M
-imap <leader>rm <esc>:%s/<c-v><c-m>//g<cr>
-nmap <leader>rm :%s/<c-v><c-m>//g<cr>
-vmap <leader>rm <esc>:%s/<c-v><c-m>//g<cr>
-
-" \rt 一键替换全部Tab为空格
-imap <leader>rt <esc>:retab<cr>
-nmap <leader>rt :retab<cr>
-vmap <leader>rt <esc>:retab<cr>
-
-" \ra 一键清理当前代码文件
-nmap <leader>ra <esc><Leader>rt<esc><Leader>rb<esc><Leader>rm<esc>gg=G<esc>
-
-nmap <leader>ev <esc>:e $MYVIMRC<cr>       " \ev open and edit default vimrc "打开编辑默认vimrc
-nmap <leader>sv <esc>:source $MYVIMRC<cr>  " \sv source default vimrc "生效默认vimrc
+" \ev open and edit default vimrc "打开编辑默认vimrc
+nnoremap <leader>ev <esc>:e $MYVIMRC<cr>
+" \sv source default vimrc "生效默认vimrc
+nnoremap <leader>sv <esc>:source $MYVIMRC<cr>
 
 " 真正的删除，而不是剪切
 nnoremap <leader>x "_x
@@ -479,7 +445,8 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()               " for performance
 
-" This function can delete trailing whitespace "这个函数通过替换命令删除行尾空格
+" This function can delete trailing whitespace
+" "这个函数通过替换命令删除行尾空格
 func! DeleteTrailingWS()
     exec "normal mz"
     %s/\s\+$//ge
@@ -489,19 +456,11 @@ endfunc
 au BufWrite * :call DeleteTrailingWS()    " Auto delete trailing whitespace when save file "保存时自动删除行尾空格
 
 " ========================== about make 编译相关 ======================================= "
-" 在程序工程目录下的workspace.vim中，需要编写如下命令，其中的路径要填写为当前程序路径"
-" \mm 使用make编译当前工程
-" \mc 使用make clean清空当前工程
-" \mi 使用make install安装当前工程二进制文件
-"nnoremap <silent> <Leader>mm :wa<cr> :make -C ~/project/<cr> :cw<cr>
-"nnoremap <silent> <Leader>mc :make clean -C ~/project/<cr> :cw<cr>
-"nnoremap <silent> <Leader>mi :make install -C ~/project/<cr> :cw<cr>
-" 注意，若向使:cw正常跳转到出错文件，需要将make输出信息设置为英文，如在.bashrc中添加:
-" export LANGUAGE=en_US.UTF-8
+" 需要安装AsyncRun插件
 " \mp 上一项错误项
 " \mn 下一项错误项
-noremap <Leader>mp :cp<cr>
-noremap <Leader>mn :cn<cr>
+noremap <Leader>p :cp<cr>
+noremap <Leader>n :cn<cr>
 
 " ========================== Plugins =============================== "
 "
@@ -520,25 +479,25 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'            " vim下美观智能任务栏，取代vim-powerline，同时可取代minibufexpl
 Plug 'octol/vim-cpp-enhanced-highlight'   " c++ 增强高亮插件
 Plug 'Yggdroot/indentLine'                " 缩进指示
-Plug 'scrooloose/nerdtree'                " 工程目录管理，替代vim中固定的newtrw插件，功能一样
 Plug 'scrooloose/nerdcommenter'           " 自动开关注释
-Plug 'dyng/ctrlsf.vim'                    " 工程目录下的内容查找，基于ack，替代grep.vim和ack.vim插件
-Plug 'majutsushi/tagbar'                  " exchange taglist，better than taglist
+Plug 'majutsushi/tagbar'                  " show and switch tags, exchange taglist
 Plug 'jiangmiao/auto-pairs'               " 括号自动补全插件
 Plug 'othree/xml.vim'                     " xml file helper
-Plug 'airblade/vim-gitgutter'             " show git diff in the code, jump to changed code hunks
+Plug 'mhinz/vim-signify'                  " show git diff in the code, exchange vim-gitgutter
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " confirm you have already install fzf
 Plug 'junegunn/fzf.vim'
+Plug 'vim-scripts/a.vim'                  " 在头文件和源文件之间快速切换
+Plug 'ludovicchabant/vim-gutentags'       " check tag files and update autometically
+Plug 'skywind3000/asyncrun.vim'           " async running tesk
+Plug 'tpope/vim-fugitive'                 " package of git operation
+" Plug 'scrooloose/nerdtree'                " 工程目录管理，替代vim中固定的newtrw插件，功能一样
+" Plug 'airblade/vim-gitgutter'             " show git diff in the code, jump to changed code hunks
 call plug#end()
 
 " ---------- 插件配置选项 ----------"
 " 可以通过搜索：Plugin:[plugin name]来全文快速查找插件配置
 "
 " # 部分插件需要系统软件的支持，罗列在这里：
-" ctrlsf 插件需要系统安装有 ack, sudo apt-get install ack-grep
-" Ultisnips 插件需要系统.vim文件夹中设置好 snips脚本
-" taglist 插件需要系统安装有 ctags，sudo apt-get install ctags，并且在使用前在工程中创建ctags标签文件
-" YCM 插件需要系统的支持，需要系统vim支持python，注意不是python3，需要clang支持，是唯一需要编译才可以运行的插件
 
 " Plugin:vim-airline (https://github.com/vim-airline/vim-airline)"
 " 加入airline状态栏
@@ -577,12 +536,12 @@ let g:indentLine_enabled = 1
 " P 跳转到根节点
 " q 关闭nerdtree窗口
 " \nt 打开/关闭文件树窗口快捷键
-nmap <leader>nt :NERDTree<cr>
-let g:NERDTreeShowHidden = 1                   " 显示隐藏文件
-let NERDTreeWinSize=25                          " 设置子窗口宽度
-let NERDTreeWinPos="left"                      " 设置子窗口位置
-let NERDTreeMinimalUI=1                         " 子窗口不显示冗余帮助信息
-let NERDTreeAutoDeleteBuffer=1                  " 删除文件时自动删除对应buffer
+" nmap <leader>nt :NERDTree<cr>
+" let g:NERDTreeShowHidden = 1                   " 显示隐藏文件
+" let NERDTreeWinSize=25                          " 设置子窗口宽度
+" let NERDTreeWinPos="left"                      " 设置子窗口位置
+" let NERDTreeMinimalUI=1                         " 子窗口不显示冗余帮助信息
+" let NERDTreeAutoDeleteBuffer=1                  " 删除文件时自动删除对应buffer
 
 " Plugin:nerdcommenter (https://github.com/scrooloose/nerdcommenter)"
 " NERDcommenter      注释处理插件
@@ -599,31 +558,6 @@ let g:NERDefaultAlign = 1                        " 注释在评论行的最左�
 let g:NERDAltDelims_c = 1                        " 使用c的分隔符作为默认备用分隔符
 let g:NERDCustomDelimiters = { 'c': { 'left': '/*', 'right': '*/'} }   " 用户定义
 let g:NERDCommentEmptyLines = 1                  " 允许注释空行
-
-" Plugin:Ultisnips (https://github.com/SirVer/ultisnips)
-" 自动补全插件
-" ~/.vim/bundle/ultisnips/mysnippets需要备份，或者：
-" 在安装插件后，在目录`~/.vim/bundle/ultisnips/`下，新建目录`mysnippets`，在该目录下手动下载snippets
-" 下载地址：https://github.com/honza/vim-snippets，可以直接输入:
-" `wget https://raw.githubusercontent/honza/vim-snippets/c.snippets`下载，c.snippets可以换成其他语言
-" 另外，我在我的repo中提供了一些snippets
-let g:UltiSnipsSnippetDirectories=["mysnippets"]
-" UltiSnips模板补全快捷键与YCM快捷键有冲突，所以重新设定"
-let g:UltiSnipsExpandTrigger="<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
-let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
-
-" Plugin:ctrlsf (https://github.com/dyng/ctrlsf.vim)"
-" 强大的工程目录名称搜索内容查找插件
-" 需要系统安装ack, ubuntu下为sudo apt-get install ack-grep
-" 进入ctrlsf后的基本操作：
-" p 打开当前选中匹配项，但不关闭ctrlsf窗口"
-" q 关闭ctrlsf窗口，不进行匹配"
-" <enter> 打开当前选中匹配项，并关闭ctrlsf窗口"
-" <Leader>sf 搜索快捷键, 速记 ctrl's''f'
-nnoremap <Leader>sf :wa<cr> :CtrlSF<cr>
-" 默认搜索路径为工程目录，工程目录的确认是寻找最近的.git .hg .svn .bzr _darcs"
-let g:ctrlsf_default_root = 'project'
 
 " Plugin:vim-signature (https://github.com/kshenoy/vim-signature)"
 " 辅助标签使用的插件，如标签显示，添加标签等
@@ -650,42 +584,6 @@ let g:SignatureMap = {
             \ 'ListLocalMarks'     :  "ms",
             \ 'ListLocalMarkers'   :  "m?"
             \ }
-
-" Plugin:taglist.vim (https://github.com/vim-script/taglist.vim)"
-" 用于显示tag的辅助插件
-" 需要系统中有ctags支持
-" :TlistOpen 用于打开taglist窗口
-" :TlistClose 用于关闭taglist窗口，直接输入q也可以关闭窗口
-" :TlistToggle 若打开则关闭，若关闭则打开
-" <space> 显示光标下的tag的原型定义
-" o 在一个新打开的窗口中显示光标下的tag
-" x taglist窗口放大或缩小
-" + 打开一个折叠，用zo也可以
-" - 关闭一个折叠，用zc也可以
-" × 打开所有折叠，用zR也可以
-" = 关闭所有折叠，用zM也可以
-" [[ 跳到前一个文件
-" ]] 跳到后一个文件
-" q 关闭taglist窗口
-" \tl                 打开/关闭Tags窗口，在右侧栏显示 [Tagbar插件]
-nmap <leader>tl :TlistToggle<cr>
-nmap <leader>tg <esc><c-]>
-nmap <leader>tr <esc><c-t>
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr><cr> :TlistUpdate<cr>
-imap <F5> <ESC>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr><cr> :TlistUpdate<cr>
-set tags=tags
-set tags+=tags;/
-set tags+=./tags "添加当前路径下的tags文件
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'      " 如果ctags在PATH路径下，可以不设置该项
-"let Tlist_Show_One_File = 1                 " 不允许同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1               " 如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1              " 在右侧窗口中显示taglist窗口
-"let Tlist_Auto_Open = 1                    " 启动vim时，自动打开taglist窗口
-let Tlist_GainFocus_On_ToggleOpen = 1       " 当使用:TlistToggle打开taglist窗口时，自动跳转到taglist窗口
-let Tlist_Close_On_Select = 1              " 选择了tag后自动关闭taglist窗口
-let Tlist_File_Fold_Auto_Close = 1          " 当同时显示多个文件中的tag时，可只显示当前文件tag，其他的tag都折叠起来
-let Tlist_Process_File_Always = 1           " 始终解析文件中的tag，而不管taglist是否打开
-"let Tlist_Use_Horiz_Window = 1             " 设置taglist横向显示
 
 " Plugin:tagbar
 nmap <leader>tb :TagbarToggle<cr>
@@ -730,40 +628,6 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
-
-" Plugin:syntastic插件(https://github.com/scrooloose/syntastic)"
-" Syntastic           语法检查
-" 由YouCompleteMe功能代替
-" 语法检查是自动启动的
-" <leader>s  打开错误界面
-" <leader>sn 错误界面的下一条位置
-" <leader>sp 错误界面的上一条位置
-"nnoremap <Leader>s :call ToggleErrors()<cr>
-"nnoremap <Leader>sn :lnext<cr>
-"nnoremap <Leader>sp :lprevious<cr>
-"关于开关配置
-"let g:syntastic_error_symbol='>>'
-"let g:syntastic_warning_symbol='>'
-"let g:syntastic_check_on_open=1             "默认开启
-"let g:syntastic_check_on_wq=0
-"let g:syntastic_enable_highlighting=1
-"let g:syntastic_python_checkers=['pyflakes']    "使用pyflakes，速度比pylint快
-"let g:syntastic_javascript_checkers=['jsl','jshint']
-"let g:syntastic_html_checkers=['tidy','jshint']
-"修改背景高亮色，适应主题
-"highlight SyntasticErrorSign guifg=white guibg=black
-"关于错误列表
-"let g:syntastic_always_populate_loc_list=0
-"let g:syntastic_auto_loc_list=0
-"let g:syntastic_loc_list_height=5
-"function! ToggleErrors()
-"    let old_last_winnr=winnr('$')
-"    lclose
-"    if old_last_winnr==winnr('$')
-"        "打开错误界面
-"        Errors
-"    endif
-"endfunction
 
 " Plugin:vim-easymotion插件 (https://github.com/Lokaltog/vim-easymotion.git)
 " 可以变换一些位置的字母为高亮特殊字符，然后直接跳转
@@ -813,15 +677,88 @@ let g:Doxygen_enhanced_color = 1
 " <Leader>hv : view current hunk with a small window
 " <Leader>hn : jump to next hunk
 " <Leader>hm : jump to previous hunk
-let g:gitgutter_terminal_reports_focus = 1
-set updatetime=200 " Pay attentain that this is a vim config option
-nmap <Leader>ha <Plug>(GitGutterStageHunk)
-nmap <Leader>hr <Plug>(GitGutterUndoHunk)
-nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
-nmap <Leader>hn <Plug>(GitGutterNextHunk)
-nmap <Leader>hm <Plug>(GitGutterPrevHunk)
+"
+" let g:gitgutter_terminal_reports_focus = 1
+" set updatetime=200 " Pay attentain that this is a vim config option
+" nmap <Leader>ha <Plug>(GitGutterStageHunk)
+" nmap <Leader>hr <Plug>(GitGutterUndoHunk)
+" nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
+" nmap <Leader>hn <Plug>(GitGutterNextHunk)
+" nmap <Leader>hm <Plug>(GitGutterPrevHunk)
 
 " Plugin:auto-pairs (https://github.com/jiangmiao/auto-pairs.git)
 " 括号自动匹配与删除
 "
 au Filetype vim   unlet g:AutoPairs['"']   " 在vim文件中禁止对双引号(注释符号)的配对操作
+
+" Plugin:a.vim (https://github.com/vim-scripts/a.vim.git)
+" 在头文件和源文件之间快速切换
+" fast switch between header file and corresponding source file
+"
+" :A  在新buffer中打开对应文件     switch file in new buffer
+" :AS 水平分割窗口并打开对应文件  switch file with split window
+" :AV 垂直分割窗口并打开对应文件  switch file with vertical split window
+" :AT 在新tab中打开对应文件       switch file in new tab
+
+" Plugin:vim-gutentags (https://github.com/ludovicchabant/vim-gutentags.git)
+" 管理tags文件并自动更新
+"
+" " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = 'tags'
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" Plugin: AsyncRun (https://github.com/skywind3000/asyncrun.vim.git)
+" 异步运行插件，可以指定任何需要异步运行的任务
+"
+" auto open quickfix window with height fixed
+let g:asyncrun_open = 15
+" bell after tesk finished
+let g:asyncrun_bell = 1
+" open/close quickfix window
+nnoremap <silent><leader>w :call asyncrun#quickfix_toggle(15)<cr>
+" 以下配置用于构建相关任务
+" make project (only used for LLVM, you can change it to your project)
+nnoremap <silent><leader>m :AsyncRun -cwd=<root> cd build && ninja<cr>
+" auto open quickfix when finish build
+au User AsyncRunStop copen15 | clast | wincmd p
+" next error item
+nnoremap <silent><leader>cn :cn<cr>
+" previous error item
+nnoremap <silent><leader>cp :cp<cr>
+
+" Plugin: Signify (https://github.com/mhinz/vim-signify)
+" 显示版本控制的修改信息，如git, svn
+"
+let g:signify_vcs_list = [ 'git' ]
+noremap <silent><leader>sd :SignifyDiff!<cr> <c-w>h
+noremap <silent><leader>su :SignifyHunkUndo<cr>
+nmap <leader>sn <plug>(signify-next-hunk)
+nmap <leader>sp <plug>(signify-prev-hunk)
+
+set updatetime=100
+" nicer colors
+highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
+highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
+highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
+highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+
+" Plugin:fugitive (https://github.com/tpope/fugitive.git)
+" git操作的包装，可以在vim中做复杂的git操作
+"
+nmap <Leader>gs :Gstatus<cr>
+nmap <Leader>gc :Gcommit<cr>
+nmap <Leader>ga :Gwrite<cr>
+nmap <Leader>gr :Gread<cr>
+nmap <Leader>ge :Gedit<cr>
+nmap <Leader>gd :Gvdiff<cr>
+nmap <Leader>gb :Gblame<cr>
