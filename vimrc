@@ -19,12 +19,12 @@
 "   还需要在bashrc中配置$VIM, $VIMRUNTIME
 "
 "   -- Contents --
-"   0. mark: c 目录
-"   1. mark: a 快捷键说明
-"   2. mark: g 通用设置
-"   3. mark: k 自定义快捷键
-"   4. mark: m 编译相关
-"   5. mark: v 插件管理与配置
+"   输入' + mark，跳转到对应位置，如输入'a，会跳转到快捷键设置部分
+"   0. mark: c contents              目录
+"   1. mark: s shortcut keys list    快捷键说明
+"   2. mark: g general setting       通用设置
+"   3. mark: k shortcut keys setting 自定义快捷键
+"   4. mark: p plugins setting       插件管理与配置
 
 " ========== Description of Custom shortcut keys 自定义快捷键说明 ==========="
 " ---------- Ctrl系按键 ----------
@@ -40,64 +40,36 @@
 " Ctrl + k                   --切换到上边的分屏窗口
 " Ctrl + j                  --切换到下边的分屏窗口
 "
-" Ctrl + d                  --关闭当前标签窗口，如果只剩最后一个，则退出vim
-"
 " Ctrl + o                  --返回光标上次停留位置，另外''也可以实现返回，但只能返回一次
 "
 " Ctrl + e                  --向下翻滚页面一行，光标不移动
 " Ctrl + y                  --向上翻滚页面一行，光标不移动
 "
-" Ctrl + n                  --多光标选中与当前光标字段相同的下一个字段 [vim-multiple-cursors]
-" Ctrl + p                  --多光标选中与当前光标字段相同的上一个字段 [vim-multiple-cursors]
-" Ctrl + x                  --取消当前多光标选中的字段 [vim-multiple-cursors]
-"
-" Ctrl + u                  --将之前输入的一串字符转换为大写，完美解决不按capslock键输入一串大写字符的问题，也完美取代capslock
-"
 " ---------- Shift系按键 ----------
 "
-" Shift + >>                 --当前行缩进增加一个单位  [Normal]
-" Shift + <<                 --当前行缩进减少一个单位  [Normal]
+" Shift + >>                 --当前行缩进增加一个单位
+" Shift + <<                 --当前行缩进减少一个单位
 "
 " ---------- Leader系按键 ----------
 "  你可以输入 :map <Leader> 比如：:map ,
 "  来打印出所有以<Leader>键开头的键盘映射
 "
-" <Leader>c                  --复制至公共剪贴板       [仅选择模式]
-" <Leader>a                  --复制所有至公共剪贴板   [Normal模式可用]
+" <Leader>c                  --复制至公共剪贴板
+" <Leader>a                  --复制所有至公共剪贴板
 "
-" <Leader>rb                 --一键去除所有尾部空白   [全模式可用]
-" <Leader>rm                 --一键去除^M字符         [全模式可用]
-" <Leader>rt                 --一键替换全部Tab为空格  [全模式可用]
-" <Leader>ra                 --一键清理当前代码文件   [Normal模式可用]
-"
-" <Leader>bb                 --按=号对齐代码          [Normal模式可用]
+" <Leader>rm                 --一键去除^M字符
+" <Leader>rt                 --一键替换全部Tab为空格
 "
 " <Leader>ev                 --编辑当前所使用的Vim配置文件
+" <Leader>sv                 --使当前的Vim配置文件生效
 "
 " <Leader>/                  --取消搜索后的单词高亮
 "
-" "<Shift-Tab>               --向前轮询切换每一个标签
+" <Tab>                      --切换到后一个buffer
+" <Shift-Tab>               --切换到前一个buffer
 "
-" "<Leader>vsp               --将当前所在标签文件复制并左右分割
-" "<Leader>sp                --将当前所在标签文件复制并上下分割
-"
-" ---------- 格式化命令 ----------
-"
-" ==                         --缩进当前行
-" =G                         --缩进直到文件结尾
-" gg=G                       --缩进整个文件
-" 行号G=行号G                 --缩进指定区间
-
-" u [小写]                   --单步复原               [非插入模式]
-" U [大写]                   --整行复原               [非插入模式]
-" Ctrl + R                   --反撤消                 [非插入模式]
-"
-" ---------- 搜索命令 ----------
-"
-" #                          --向前搜索当前光标所在字符
-" *                          --向后搜索当前光标所在字符
-" ?                          --向前搜索
-" /                          --向后搜索
+" <Leader>vsp               --将当前所在标签文件复制并左右分割
+" <Leader>sp                --将当前所在标签文件复制并上下分割
 "
 " ---------- 跳转命令 ----------
 "
@@ -153,7 +125,6 @@
 "
 " Ctrl + A                   --将当前光标所在数字自增1        [仅普通模式可用]
 " Ctrl + X                   --将当前光标所在数字自减1        [仅普通模式可用]
-" :g/^/m0                    --将整个文件所有行排列顺序颠倒   [命令模式]
 " m字符       and '字符      --标记位置 and 跳转到标记位置
 " q字符 xxx q and @字符      --录制宏   and 执行宏
 
@@ -177,11 +148,8 @@ let mapleader=","
 let g:isWIN = 0
 let g:isMAC = 0
 
-" ------------ 判断是否处于GUI界面 -------------
-""if GUI
-"let g:isGUI = 1
-""if not GUI
-let g:isGUI = 0
+let g:isGUI = 0     " 只支持非GUI模式，我个人认为vim现在只用在terminal里合适，
+                    " GUI下边有无数中比它好用的编辑器，最多只需要安装vim键映射的插件
 
 
 " ------------ 设置着色模式和字体 -------------
@@ -218,7 +186,6 @@ set autochdir                   " 设定文件浏览器目录为当前目录
 " set foldmethod=indent         " 选择代码折叠类型，基于缩进进行代码折叠
 set foldmethod=syntax           " 选择代码折叠类型，基于语法进行代码折叠
 set foldlevel=100               " 禁止自动折叠
-" set nofoldenable              " 启动vim时关闭折叠代码
 set foldenable                  " 启动vim时打开折叠代码
 set laststatus=2                " 开启状态栏信息，2为总显示最后一个窗口的状态行，1则为窗口数多于一个的时候显示最后一个窗口的状态行，0为不显示最后一个窗口的状态行
 set cmdheight=1                 " 命令行的高度，默认为1，这里设为2
@@ -248,7 +215,7 @@ hi CursorColumn cterm=NONE  ctermbg=lightmagenta ctermfg=none " config current c
 set showcmd                     " 命令行显示输入的命令
 set noshowmode                    " 命令行显示vim当前模式中
 
-set mouse=a                    " 启动鼠标操作
+set mouse=a                     " 启动鼠标操作
 
 " 设置通用缩进策略
 set expandtab                   " Automatically converts tabs to Spaces " 将Tab自动转化成空格
@@ -455,13 +422,6 @@ endfunc
 
 au BufWrite * :call DeleteTrailingWS()    " Auto delete trailing whitespace when save file "保存时自动删除行尾空格
 
-" ========================== about make 编译相关 ======================================= "
-" 需要安装AsyncRun插件
-" \mp 上一项错误项
-" \mn 下一项错误项
-noremap <Leader>p :cp<cr>
-noremap <Leader>n :cn<cr>
-
 " ========================== Plugins =============================== "
 "
 " 如果你是第一次使用该vim配置文件，需要在shell中执行如下一行命令：
@@ -588,23 +548,6 @@ let g:SignatureMap = {
 " Plugin:tagbar
 nmap <leader>tb :TagbarToggle<cr>
 let g:tagbar_autofocus = 1
-
-" Plugin:ctrlp插件"
-" 文件模糊搜索，可以搜索文件、buffer、mru、tag等
-" 原始为kien/ctrlp，使用改进版ctrlpvim/ctrlp.vim
-let g:ctrlp_map = '<leader>p'
-let g:ctrlp_cmd = 'CtrlP'
-map <leader>f :CtrlPMRU<cr>
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
-    \}
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_match_window_bottom = 1
-let g:ctrlp_max_height = 15
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_mruf_max = 500
-let g:ctrlp_follow_symlinks = 1
 
 " Plugin:fzf插件
 " you need to install fzf tool in your system and add install path to PATH
@@ -742,8 +685,8 @@ noremap <silent><leader>sd :SignifyDiff!<cr> <c-w>h
 noremap <silent><leader>su :SignifyHunkUndo<cr>
 nmap <leader>sn <plug>(signify-next-hunk)
 nmap <leader>sp <plug>(signify-prev-hunk)
-
 set updatetime=100
+" let g:signify_realtime = 1    " if update not work until :w, try this setting
 " nicer colors
 highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
 highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
