@@ -227,10 +227,6 @@ set smarttab                    " delete a tab with one backspace button " 按�
 " 与系统共用剪切板，（将系统剪切板与匿名寄存器映射）
 set clipboard=unnamed
 
-set textwidth=80                " set textwidth, auto return to next line when exceed the number
-                                " 设置文本宽度，当输入大于该数值时，自动换行
-set colorcolumn=81              " textwidth border highlight "文本宽度高亮提示线
-
 " 文件类型检测与语法开关
 if has("syntax")
     syntax enable               " 打开语法高亮
@@ -262,6 +258,8 @@ set fileencodings=utf-8,gbk,cp936,latin-1   " 设置支持的文件编码"
 set ambiwidth=double
 set fileformat=unix                         " 设置新文件的EOL格式"
 set fileformats=unix,mac,dos                " 给出文件的EOL格式类型"
+
+autocmd FileType text,markdown,html,xml set wrap " 这些类型文件允许自动折行
 
 " 以下的内容是用于避免中文菜单的乱码问题，默认设置为在windows系统中启用
 if g:isWIN
@@ -301,11 +299,16 @@ augroup END
 au FileType c,cpp,html,htmldjango,lua,javascript,nsis
     \ set expandtab | set tabstop=2 | set shiftwidth=2
 
+" set textwidth, auto return to next line when exceed the number
+" 设置文本宽度，当输入大于该数值时，自动换行
+au FileType c,cpp,tablegen,llvm set textwidth=80
+
+" textwidth border highlight "文本宽度高亮提示线
+au FileType c,cpp,tablegen,llvm set colorcolumn=81
+
 " In Makefiles, don't expand tabs to spaces, since we need the actual tabs, set tabs to 8 spaces
 " 在makefile中，不将tabs扩展成空格，因为我们需要真的tab，并设定tab为8个空格
 au FileType make set noexpandtab | set tabstop=8 | set shiftwidth=8
-" auto wrap in xml file
-au FileType xml set wrap
 
 " ------------- END of Use for LLVM -------------------
 
@@ -343,11 +346,12 @@ nnoremap <silent> _ :exe "resize " . (winheight(0) * 3/4)<cr>
 nnoremap <silent> = :exe "vertical resize " . (winwidth(0) * 4/3)<cr>
 nnoremap <silent> - :exe "vertical resize " . (winwidth(0) * 3/4)<cr>
 "
-"交换上下行切换的物理切换与逻辑切换"
-nnoremap k gk
-nnoremap gk k
-nnoremap j gj
-nnoremap gj j
+" 交换上下行切换的物理切换与逻辑切换"
+" 即自动折行后，上下行可以移动光标到同一行的折行部分
+" nnoremap k gk
+" nnoremap gk k
+" nnoremap j gj
+" nnoremap gj j
 
 " 增加一行但不进入插入模式"
 nnoremap to o<Esc>
@@ -376,8 +380,10 @@ nnoremap U <C-r>
 " 所以不如就每次跳转时，如果有多个tags，就输出列表让我自己选择
 nnoremap <c-]> g<c-]>
 
-nnoremap J <esc>8j<cr>  " Scroll down for the specified lines "向下滚屏 8行
-nnoremap K <esc>8k<cr>  " Scroll up for the specified lines "向上滚屏 8行
+" Scroll down for the specified lines "向下滚屏 8行
+nnoremap J 8j
+" Scroll up for the specified lines "向上滚屏 8行
+nnoremap K 8k
 
 " switch to line head "光标跳转到行首
 nnoremap H 0
@@ -469,17 +475,6 @@ nnoremap <tab> :bn<CR>
 nnoremap <s-tab> :bp<CR>
 let g:airline#extensions#whitespace#enabled=0   " 下边两行为关闭状态栏空白符号计数显示
 let g:airline#extensions#whitespace#symbol='!'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
 
 " Plugin:indentLine (https://github.com/Yggdroot/indentLine)"
 " 缩进指示插件
