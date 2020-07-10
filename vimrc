@@ -276,7 +276,9 @@ set tags=./tags;,tags
 
 " ------------- Use for LLVM -------------------
 " Set a few indentation parameters for LLVM source code style.
-set cinoptions=:0,g0,(0,Ws,l1
+" set cinoptions=:0,g0,(0,Ws,l1
+" au FileType tablegen set cinoptions+=<<>0
+au FileType tablegen set cinkeys+=0<<>
 
 " Delete trailing whitespace and tabs at the end of each line
 command! DeleteTrailingWs :%s/\s\+$//
@@ -472,7 +474,7 @@ let g:airline#extensions#tabline#enabled = 1  " 允许显示tabline
 let g:airline#extensions#tabline#formatter = 'unique_tail'   " tabline上的标题只显示文件名
 let g:airline#extensions#tabline#buffer_nr_show = 1    " tabline上显示buffer的标号
 nnoremap <tab> :bn<CR>
-nnoremap <s-tab> :bp<CR>
+nnoremap <S-tab> :bp<CR>
 let g:airline#extensions#whitespace#enabled=0   " 下边两行为关闭状态栏空白符号计数显示
 let g:airline#extensions#whitespace#symbol='!'
 
@@ -627,6 +629,7 @@ let g:Doxygen_enhanced_color = 1
 " Plugin:auto-pairs (https://github.com/jiangmiao/auto-pairs.git)
 " 括号自动匹配与删除
 "
+au FileType tablegen let g:AutoPairs["<"] = ">"
 au Filetype vim   unlet g:AutoPairs['"']   " 在vim文件中禁止对双引号(注释符号)的配对操作
 
 " Plugin:a.vim (https://github.com/vim-scripts/a.vim.git)
