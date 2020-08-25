@@ -236,6 +236,9 @@ filetype indent on              " 针对不同的文件类型采用不同的缩�
 filetype plugin on              " 针对不同的文件类型加载对应的插件
 filetype plugin indent on       " 针对不同的文件类型加载对应的插件缩进
 
+let c_minlines=200  " This maybe slow down syntax highlight,
+                    " 标记语法高亮的检查行数，对于比较大范围的 #if 0 可以有效判断，但会拖慢语法高亮
+
 " 根据后缀名指定文件类型
 autocmd BufRead,BufNewFile *.h            setlocal ft=c
 autocmd BufRead,BufNewFile *.i            setlocal ft=c
@@ -702,3 +705,4 @@ nmap <Leader>gr :Gread<cr>
 nmap <Leader>ge :Gedit<cr>
 nmap <Leader>gd :Gvdiff<cr>
 nmap <Leader>gb :Gblame<cr>
+
